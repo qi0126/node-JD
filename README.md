@@ -1,5 +1,4 @@
 # 基于Vue2.0+Vuex+Axios+NodeJs+Express+MySQL实现京东移动web商城
-- 经过一个多月总算完成第一个版本
 ## 前端架构
 - 页面结构(H5,CSS3,原生JS)
 - 框架(基于Vue脚手架:vue-cli)进行搭建
@@ -41,7 +40,7 @@ cd vue-jd
 ```
 
 ```
-npm install 或 cnpm install(个人比较喜欢使用后者，下载依赖模块速度较快)
+npm install
 ```
 
 ```
@@ -90,6 +89,4 @@ node server.js
 
 ![](http://i.imgur.com/sIfHd0z.png)
 
-
-....未完待续 QQ交流群:526450553已满员，大家可以叫我个人QQ：386271623，拉大家进微信群
 
