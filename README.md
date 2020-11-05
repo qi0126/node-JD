@@ -1,4 +1,5 @@
 # 基于Vue2.0+Vuex+Axios+NodeJs+Express+MySQL实现京东移动web商城
+主要是学习用node写接口
 ## 前端架构
 - 页面结构(H5,CSS3,原生JS)
 - 框架(基于Vue脚手架:vue-cli)进行搭建
@@ -12,7 +13,6 @@
 	- 官网 [http://www.expressjs.com.cn/](http://www.expressjs.com.cn/ "express官网")
 - Mysql中间件处理与数据库的"通信"
 - Body-Parser中间件进行前端请求参数的获取
-- Cookie-Parser、Cookie-Session进行cookie与session的处理
 
 
 ## 数据库选取
@@ -23,8 +23,6 @@
 2. 分类页数据的展示
 3. 购物车
 4. 我的
-5. 注册
-6. 登录
 7. 商品详情页
 8. 商品搜索
 

@@ -7,10 +7,13 @@ import store from './store/'
 import VueLazyload from 'vue-lazyload'
 import App from './App.vue'
 import Loading from './components/loading'
+import Vant from 'vant';
+import 'vant/lib/index.css';
 require('./assets/css/base.css'); //全局引入
 Vue.use(Less);
 Vue.use(VueRouter);
 Vue.use(Loading);
+Vue.use(Vant);
 Vue.use(VueLazyload, {
     preLoad: 1.3,
     error: require('./assets/images/err.png'),
