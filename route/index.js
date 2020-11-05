@@ -110,7 +110,8 @@ module.exports = () => {
                 res.status(500).send('database err').end();
             } else {
                 if (data.length == 0) {
-                    res.status(500).send('no datas').end();
+                    res.send([]);
+                    // res.status(500).send('no datas').end();
                 } else {
                     res.send(data);
                 }
@@ -150,7 +151,8 @@ module.exports = () => {
                 res.status(500).send('database err').end();
             } else {
                 if (data.length == 0) {
-                    res.status(500).send('no datas').end();
+                    // res.status(500).send('no datas').end();
+                    res.send([])
                 } else {
                     res.send(data);
                 }
