@@ -46,13 +46,16 @@ axios.interceptors.response.use(function(response) { //配置请求回来的信�
 });
 axios.defaults.baseURL = 'http://localhost:3333/';
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+if (localStorage.accesstoken && localStorage.userInfo) {
+    store.dispatch('setUserInfo', localStorage.userInfo);
+    axios.defaults.headers.accessToken = localStorage.accesstoken//请求头带token
+}
+
 Vue.prototype.$http = axios;
 /*axios.defaults.baseURL = (process.env.NODE_ENV !=='production' ? config.dev.httpUrl:config.build.httpUrl);
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';*/
 // 处理刷新的时候vuex被清空但是用户已经登录的情况
-if (window.sessionStorage.userInfo) {
-    store.dispatch('setUserInfo', JSON.parse(window.sessionStorage.userInfo));
-}
+
 
 // 登录中间验证，页面需要登录而没有登录的情况直接跳转登录
 router.beforeEach((to, from, next) => {

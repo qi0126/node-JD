@@ -7,14 +7,31 @@ const db = mysql.createPool({
     password: 'batar123',
     database: 'myigou'
 });
+const jwt = require('jsonwebtoken')
+
+//token私钥
+const PRIVATE_KEY = 'tokenKey'
+
 module.exports = () => {
     const route = express.Router();
     const getHomeStr = `SELECT product_id,product_name,product_price,product_img_url,product_uprice FROM product`;
     const getCateNames = `SELECT * FROM category ORDER BY category_id desc`;
     //get homePage datas
     route.get('/home', (req, res) => {
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken)
         getHomeDatas(getHomeStr, res);
     });
+    //验证token
+    function getToken(token){
+        console.log('token:',token)
+        // console.log('jwt:',jwt.verify(token,PRIVATE_KEY))
+        //token
+        //解析token
+        // let verifyToken = jwt.verify(token, PRIVATE_KEY)
+        // console.log("verifyToken:",verifyToken)
+
+    }
 
     function getHomeDatas(getHomeStr, res) {
         db.query(getHomeStr, (err, data) => {
@@ -192,11 +209,9 @@ module.exports = () => {
         let mObj = {};
         for (let obj in req.body) {
             mObj = JSON.parse(obj);
-            console.log(mObj);
         }
         let username = mObj.loginName;
         let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE);;
-        // console.log(username, mObj.passwd);
         const selectUser = `SELECT * FROM user where user_name='${username}'`;
         db.query(selectUser, (err, data) => {
             if (err) {
@@ -208,12 +223,17 @@ module.exports = () => {
                 } else {
                     let dataw = data[0];
                     //login sucess
-                    console.log("dataw:",dataw,password)
                     if (dataw.login_password === password) {
                         //save the session 
                         req.session['user_id'] = dataw.user_id;
                         dataw.msg = "登录成功";
-                        dataw.status = 1;
+                        dataw.status = 200;
+                        const username = dataw.user_name
+                        const userid = dataw.user_id
+                        //token时效
+                        const JWT_EXPIRED = 60 * 60
+                        const token = jwt.sign({ username },{userid},PRIVATE_KEY,{expiresIn:JWT_EXPIRED})
+                        dataw.accesstoken = token//token输
                         res.send(dataw).end();
                     } else {
                         res.send({ 'msg': '密码不正确', 'status': -2 }).end();
@@ -225,7 +245,7 @@ module.exports = () => {
     });
     route.get('/userinfo', (req, res) => {
         let uId = req.query.uId;
-        const getU = `SELECT user_name,user_number FROM user where user_id='${uId}'`;
+        const getU = `SELECT user_name,user_number,user_namesub FROM user where user_id='${uId}'`;
         db.query(getU, (err, data) => {
             if (err) {
                 console.log(err);

@@ -7,7 +7,7 @@
 	                <img src="../assets/images/my_icon.jpg" alt="">
 	            </div>
 	            <div class="user_detal">
-	                <p class="user_name">{{uInfs.user_name}}</p>
+	                <p class="user_name">{{uInfs.user_namesub}}</p>
 	                <div class="reg">
 	                    <a href="#" class="reg_link">注册会员</a>
 	                    <div class="vip">
@@ -224,7 +224,7 @@
 			getUDatas(){
 				let self = this;
 				let uObj ={};
-				if(localStorage.userInfo){
+				if(localStorage.accesstoken){
 					let uObj = JSON.parse(localStorage.userInfo);
 					let useId = uObj.user_id;
 					self.$http.get('/userinfo',{
@@ -233,7 +233,7 @@
 						}
 					}).then((res)=>{
 						self.uInfs = res.data;
-						console.log(self.uInfs);
+						// console.log(self.uInfs);
 					},(err)=>{
 						console.log(err);
 					});

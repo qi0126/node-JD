@@ -45,13 +45,14 @@
 						loginName:self.username,
 						loginPawd:self.password,
 					}).then((res)=>{
-						console.log(self.password);
 					if(res.status == 200){
 						self.userInfo = res.data;
-						if(self.userInfo.status == 1){
+						if(self.userInfo.status == 200){
 							//LOGIN success
 							localStorage.userInfo = JSON.stringify(self.userInfo);
-							console.log(self.$store);
+							localStorage.accesstoken = self.userInfo.accesstoken
+							console.log("用户信息：",self.userInfo)
+							// console.log(self.$store);
 							// self.$store.dispatch('setUserInfo', userInfo);
 							// let redirect = decodeURIComponent(self.$route.query.redirect || '/');
 							setTimeout(_=>{
