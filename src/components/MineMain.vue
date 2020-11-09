@@ -236,7 +236,6 @@ import { Dialog,Toast } from 'vant';
 							uId:useId
 						}
 					}).then((res)=>{
-						console.log("res:",res)
 						if(res.status!=203){
 							self.uInfs = res.data;
 						}else{

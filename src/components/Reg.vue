@@ -58,7 +58,7 @@
 						regPasswd:self.regpasswd
 					}).then((res)=>{
 						if(res.status == 200){
-							self.regInfo = res.data;
+							self.regInfo = res.data.data;
 							if(self.regInfo.user_id){
 								Dialog.alert({
 									message: '注册成功，正在跳转！',
@@ -70,12 +70,11 @@
 								});
 
 							}else{
-								Toast( '注册失败' );
+								Toast( res.data.msg );
 							}
 						}else{
-							Toast( '出现错误' );
+							Toast( res.data.msg );
 						}
-						console.log(res);
 					},(err)=>{
 						console.log(err);
 					});

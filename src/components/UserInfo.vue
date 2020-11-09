@@ -59,7 +59,6 @@
 				}).then((res)=>{
 					if(res.status == 200){
 						self.userInfo = Object.assign(res.data,self.userInfo);
-						// console.log("用户信息：",self.userInfo)
 					}else{
 						Toast( res.data.msg );
 						setTimeout(_=>{

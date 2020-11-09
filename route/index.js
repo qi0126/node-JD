@@ -200,21 +200,25 @@ module.exports = () => {
         for (let obj in req.body) {
             mObj = JSON.parse(obj);
         }
-        let regName = mObj.regName;
-        let regPasswd = mObj.regPasswd;
-        regPasswd = common.md5(regPasswd + common.MD5_SUFFXIE);
-                // 查询所有用户
-        // const user = User.findAll().then(res=>{
-        //     console.log("res:",res)
-        // })
-        User.create({user_name:mObj.regName,user_namesub:mObj.regnamesub, login_password:regPasswd,user_number:'123'}).then(function (user) {
-           res.status(200).send(user).end();
+        let addTF = true
+        // 查询所有用户
+        User.findAll().then(res1=>{
+            res1.forEach(ielem=>{
+                // console.log("ielem",ielem.dataValues,mObj.regName)
+                if(ielem.dataValues.user_name == mObj.regName){
+                    addTF = false//有登录名重新
+                }
+            })
+            if(!addTF){
+                res.status(202).send({ 'msg': '该用户已存在', 'code': 202 }).end();
+            }else{
+                let regPasswd = mObj.regPasswd;
+                regPasswd = common.md5(regPasswd + common.MD5_SUFFXIE);
+                User.create({user_name:mObj.regName,user_namesub:mObj.regnamesub, login_password:regPasswd,user_number:'123'}).then(function (user) {
+                   res.status(200).send({ 'msg': '创建用户成功！',"data":user, 'code': 200 }).end();
+                })
+            }
         })
-        // let user1 = User.findOne
-        // console.log(users.every(user => user instanceof User)); // true
-        // console.log("All users:", user,JSON.stringify(user, null, 2));
-        // const insUserInfo = `INSERT INTO user(user_name,login_password,user_number) VALUES('${regName}','${regPasswd}','${regName}')`;
-        // delReg(insUserInfo, res);
     });
     route.post('/login', (req, res) => {
 
@@ -280,8 +284,6 @@ module.exports = () => {
             userInfoObj = Object.assign(userInfoObj,JSON.parse(obj))
         }
         let editPassword = common.md5(userInfoObj.password + common.MD5_SUFFXIE);
-        console.log("修改用户信息接口:",userInfoObj,editPassword)
-
         let editObj = { user_name: userInfoObj.user_name,user_namesub:userInfoObj.user_namesub}
         if(userInfoObj.password != ""){
             editObj.login_password = editPassword
@@ -291,7 +293,6 @@ module.exports = () => {
               user_id: userInfoObj.user_id
             }
           }).then(function (user) {
-              console.log("user",user)
             res.status(200).send({ 'msg': '修改成功！', 'code': 200}).end();
          })
     });

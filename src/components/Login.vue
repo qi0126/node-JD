@@ -55,10 +55,6 @@ import { Dialog,Toast } from 'vant';
 								//LOGIN success
 								localStorage.userInfo = JSON.stringify(self.userInfo);
 								localStorage.accesstoken = self.userInfo.accesstoken
-								console.log("用户信息：",self.userInfo)
-								// console.log(self.$store);
-								// self.$store.dispatch('setUserInfo', userInfo);
-								// let redirect = decodeURIComponent(self.$route.query.redirect || '/');
 								setTimeout(_=>{
 									self.$router.push({
 										path: "Mine"
@@ -70,7 +66,6 @@ import { Dialog,Toast } from 'vant';
 						}else{
 							alert('请求出现错误');
 						}
-						console.log(res);
 					},(err)=>{
 						console.log(err);
 					});
