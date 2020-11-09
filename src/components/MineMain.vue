@@ -21,7 +21,7 @@
 	                </div>
 	            </div>
 	            <div class="manage_account">
-	                <span>
+	                <span @click="editUser">
 	                    账户管理 >
 	                </span>
 	            </div>
@@ -115,7 +115,7 @@
 	                <li class="order_item">
 	                    <a href="#" class="order_item_link">
 	                        <span style="margin-top: -6px;display: block">0</span>
-	                        <span class="order_item_pay">京东卡/E卡</span>
+	                        <span class="order_item_pay">商城卡/E卡</span>
 	                    </a>
 	                </li>
 	            </ul>
@@ -125,7 +125,7 @@
 	        <div class="order_top_box">
 	            <div class="order_left">
 	                <img src="../assets/images/baitiao1.png" alt="">
-	                <span>京东白条</span>
+	                <span>商城白条</span>
 	            </div>
 	            <div class="order_right">
 	                <span>白条还款、激活获礼包></span>
@@ -152,7 +152,7 @@
 	        <div class="order_top_box">
 	            <div class="order_left">
 	                <img src="../assets/images/bai4.png" alt="">
-	                <span>京东会员</span>
+	                <span>商城会员</span>
 	            </div>
 	            <div class="order_right">
 	                <span>会员俱乐部></span>
@@ -163,10 +163,10 @@
 	        <div class="order_top_box">
 	            <div class="order_left">
 	                <img src="../assets/images/huo1.png" alt="">
-	                <span>京东火车票</span>
+	                <span>商城火车票</span>
 	            </div>
 	            <div class="order_right">
-	                <span>来京东轻松抢票></span>
+	                <span>来商城轻松抢票></span>
 	            </div>
 	        </div>
 	        <div class="order_top_box">
@@ -211,7 +211,11 @@
 	</div>
 </template>
 <script>
+import { Dialog } from 'vant';
 	export default{
+		components: {
+			[Dialog.Component.name]: Dialog.Component,
+		},
 		data(){
 			return{
 				uInfs:{}
@@ -232,16 +236,27 @@
 							uId:useId
 						}
 					}).then((res)=>{
-						self.uInfs = res.data;
-						// console.log(self.uInfs);
+						console.log("res:",res)
+						if(res.status!=203){
+							self.uInfs = res.data;
+						}else{
+							Toast( res.data.msg );
+							setTimeout(_=>{
+								self.$router.push('login')
+							},1000)
+						}
 					},(err)=>{
-						console.log(err);
+						Toast( err.msg );
 					});
 				}else{
 					self.$router.push({
 						path:'/login',
 					})
 				}
+			},
+			//编辑用户
+			editUser(){
+				this.$router.push({path:'userInfo',query:{userId:JSON.parse(localStorage.userInfo).user_id}})
 			}
 		}
 	}

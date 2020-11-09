@@ -2,12 +2,15 @@
 	<div class="m_r">
 		<header class="top_bar">
 		    <a onclick="window.history.go(-1)" class="icon_back"></a>
-		    <h3 class="cartname">京东注册</h3>
+		    <h3 class="cartname">商城注册</h3>
 		</header>
 		<main class="user_login_box">
 		    <div class="login_dialog">
 		        <div class="_username">
 		            <input type="text" name="regname" placeholder="用户名/邮箱/手机号" class="user_input" v-model="regname">
+		        </div>
+				<div class="_username">
+		            <input type="text" name="regnamesub" placeholder="用户别名" class="user_input" v-model="regnamesub">
 		        </div>
 		        <div class="_username u_passwd">
 		            <input type="password" name="regpasswd" placeholder="请输入密码" class="user_input" v-model="regpasswd">
@@ -23,10 +26,15 @@
 	</div>
 </template>
 <script>
+	import { Toast,Dialog } from 'vant';
 	export default{
+		components: {
+			[Dialog.Component.name]: Dialog.Component,
+		},
 		data(){
 			return{
 				regname:'',
+				regnamesub:'',
 				regpasswd:'',
 				regpasswd_ag:'',
 				regInfo:{}
@@ -36,31 +44,41 @@
 			goSearch(){
 				let self = this;
 				if(self.regname ==''){
-					alert('请输入手机号');
+					Toast( '请输入手机号' );
 				}else if(self.regpasswd == '' || self.regpasswd_ag == ''){
-					alert('请输入密码');
+					Toast( '请输入密码' );
 				}else if(self.regpasswd!==self.regpasswd_ag){
-					alert('两次输入的密码不一致');
+					Toast( '两次输入的密码不一致' );
+				}else if(self.regpasswd.length < 6){
+					Toast( '密码长度不能小于6' );
 				}else{
 					self.$http.post('/reg',{
 						regName:self.regname,
+						regnamesub:self.regnamesub,
 						regPasswd:self.regpasswd
-				}).then((res)=>{
-					if(res.status == 200){
-						self.regInfo = res.data;
-						if(self.regInfo.status == 1){
-							//reg success, go to this login page
-							window.history.go(-1);
+					}).then((res)=>{
+						if(res.status == 200){
+							self.regInfo = res.data;
+							if(self.regInfo.user_id){
+								Dialog.alert({
+									message: '注册成功，正在跳转！',
+								}).then(() => {
+									localStorage.userInfo = JSON.stringify(self.regInfo);
+									localStorage.accesstoken ="111"
+									//reg success, go to this login page
+									self.$router.push({path:'mine'})
+								});
+
+							}else{
+								Toast( '注册失败' );
+							}
 						}else{
-							alert('注册失败');
+							Toast( '出现错误' );
 						}
-					}else{
-						alert('出现错误');
-					}
-					console.log(res);
-				},(err)=>{
-					console.log(err);
-				});
+						console.log(res);
+					},(err)=>{
+						console.log(err);
+					});
 				}
 				
 			}

@@ -1,4 +1,4 @@
-# 基于Vue2.0+Vuex+Axios+NodeJs+Express+MySQL实现京东移动web商城
+# 基于Vue2.0+Vuex+Axios+NodeJs+Express+MySQL实现商城移动web商城
 主要是学习用node写接口
 ## 前端架构
 - 页面结构(H5,CSS3,原生JS)

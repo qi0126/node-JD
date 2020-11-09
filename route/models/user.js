@@ -11,6 +11,7 @@ const User = db.define('user', {
         autoIncrement: true
     },
     user_name: Sequelize.STRING(50),
+    user_namesub: Sequelize.STRING(50),
     login_password:Sequelize.STRING(50),
     user_number:Sequelize.STRING(40)
 })

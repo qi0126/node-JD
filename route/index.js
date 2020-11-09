@@ -203,27 +203,19 @@ module.exports = () => {
         let regName = mObj.regName;
         let regPasswd = mObj.regPasswd;
         regPasswd = common.md5(regPasswd + common.MD5_SUFFXIE);
-        console.log("注册信息：",regName,regPasswd,regName)
                 // 查询所有用户
-        const users = User.findAll();
+        // const user = User.findAll().then(res=>{
+        //     console.log("res:",res)
+        // })
+        User.create({user_name:mObj.regName,user_namesub:mObj.regnamesub, login_password:regPasswd,user_number:'123'}).then(function (user) {
+           res.status(200).send(user).end();
+        })
+        // let user1 = User.findOne
         // console.log(users.every(user => user instanceof User)); // true
-        console.log("All users:", JSON.stringify(users, null, 2));
+        // console.log("All users:", user,JSON.stringify(user, null, 2));
         // const insUserInfo = `INSERT INTO user(user_name,login_password,user_number) VALUES('${regName}','${regPasswd}','${regName}')`;
         // delReg(insUserInfo, res);
     });
-    /*
-     *deal user register
-     */
-    function delReg(insUserInfo, res) {
-        db.query(insUserInfo, (err) => {
-            if (err) {
-                console.error(err);
-                res.send({ 'msg': '服务器出错', 'status': 0 }).end();
-            } else {
-                res.send({ 'msg': '注册成功', 'status': 1 }).end();
-            }
-        })
-    };
     route.post('/login', (req, res) => {
 
         let mObj = {};
@@ -232,7 +224,7 @@ module.exports = () => {
         }
         let username = mObj.loginName;
         let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE);;
-        const selectUser = `SELECT * FROM user where user_name='${username}'`;
+        const selectUser = `SELECT * FROM users where user_name='${username}'`;
         db.query(selectUser, (err, data) => {
             console.log("err:",err,data)
             if (err) {
@@ -252,9 +244,9 @@ module.exports = () => {
                         const username = dataw.user_name
                         const userid = dataw.user_id
                         //token时效
-                        const JWT_EXPIRED = 60 * 60
-                        const jwt = require('jsonwebtoken')
-                        const token = jwt.sign({ username },{userid},PRIVATE_KEY,{expiresIn:JWT_EXPIRED})
+                        // const JWT_EXPIRED = 60 * 60
+                        // const jwt = require('jsonwebtoken')
+                        // const token = jwt.sign({ username },{userid},PRIVATE_KEY,{expiresIn:JWT_EXPIRED})
                         // dataw.accesstoken = token//token输
                         res.send(dataw).end();
                     } else {
@@ -267,19 +259,41 @@ module.exports = () => {
     });
     route.get('/userinfo', (req, res) => {
         let uId = req.query.uId;
-        const getU = `SELECT user_name,user_number,user_namesub FROM user where user_id='${uId}'`;
+        const getU = `SELECT user_id,user_name,user_number,user_namesub FROM users where user_id='${uId}'`;
         db.query(getU, (err, data) => {
             if (err) {
                 console.log(err);
                 res.status(500).send('database err').end();
             } else {
                 if (data.length == 0) {
-                    res.status(500).send('no datas').end();
+                    res.status(203).send({ 'msg': '用户不存在', 'code': 203} ).end();
                 } else {
                     res.send(data[0]);
                 }
             }
         });
+    });
+    route.post('/editUser', (req, res) => {
+        
+        let userInfoObj = {}
+        for (let obj in req.body) {
+            userInfoObj = Object.assign(userInfoObj,JSON.parse(obj))
+        }
+        let editPassword = common.md5(userInfoObj.password + common.MD5_SUFFXIE);
+        console.log("修改用户信息接口:",userInfoObj,editPassword)
+
+        let editObj = { user_name: userInfoObj.user_name,user_namesub:userInfoObj.user_namesub}
+        if(userInfoObj.password != ""){
+            editObj.login_password = editPassword
+        }
+        User.update(editObj, {
+            where: {
+              user_id: userInfoObj.user_id
+            }
+          }).then(function (user) {
+              console.log("user",user)
+            res.status(200).send({ 'msg': '修改成功！', 'code': 200}).end();
+         })
     });
     return route;
 }

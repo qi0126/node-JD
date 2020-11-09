@@ -2,7 +2,7 @@
 	<div class="my_l">
 		<header class="top_bar">
 		    <a onclick="window.history.go(-1)" class="icon_back"></a>
-		    <h3 class="cartname">京东登录</h3>
+		    <h3 class="cartname">商城登录</h3>
 		</header>
 		<main class="user_login_box">
 		    <div class="login_dialog">
@@ -24,7 +24,11 @@
 	</div>
 </template>
 <script>
+import { Dialog } from 'vant';
 	export default{
+		components: {
+			[Dialog.Component.name]: Dialog.Component,
+		},
 		data(){
 			return{
 				username:'',
@@ -45,27 +49,27 @@
 						loginName:self.username,
 						loginPawd:self.password,
 					}).then((res)=>{
-					if(res.status == 200){
-						self.userInfo = res.data;
-						if(self.userInfo.status == 200){
-							//LOGIN success
-							localStorage.userInfo = JSON.stringify(self.userInfo);
-							localStorage.accesstoken = self.userInfo.accesstoken
-							console.log("用户信息：",self.userInfo)
-							// console.log(self.$store);
-							// self.$store.dispatch('setUserInfo', userInfo);
-							// let redirect = decodeURIComponent(self.$route.query.redirect || '/');
-							setTimeout(_=>{
-								self.$router.push({
-									path: "Mine"
-								});
-							},1000)
+						if(res.status == 200){
+							self.userInfo = res.data;
+							if(self.userInfo.status == 200){
+								//LOGIN success
+								localStorage.userInfo = JSON.stringify(self.userInfo);
+								localStorage.accesstoken = self.userInfo.accesstoken
+								console.log("用户信息：",self.userInfo)
+								// console.log(self.$store);
+								// self.$store.dispatch('setUserInfo', userInfo);
+								// let redirect = decodeURIComponent(self.$route.query.redirect || '/');
+								setTimeout(_=>{
+									self.$router.push({
+										path: "Mine"
+									});
+								},1000)
+							}else{
+								Toast( self.userInfo.msg );
+							}
 						}else{
-							alert(self.userInfo.msg);
+							alert('请求出现错误');
 						}
-					}else{
-						alert('请求出现错误');
-					}
 						console.log(res);
 					},(err)=>{
 						console.log(err);

@@ -6,6 +6,7 @@ import SearchPage from './components/SearchPage.vue'
 import Mine from './components/Mine.vue'
 import Login from './components/Login.vue'
 import Reg from './components/Reg.vue'
+import UserInfo from './components/UserInfo.vue'
 export default [{
     path: '/home',
     component: Home
@@ -28,6 +29,10 @@ export default [{
     path: '/register',
     component: Reg
 }, {
+    path: '/userInfo',
+    component: UserInfo
+},
+ {
     path: '/catgory/:id',
     component: Category
 }, {

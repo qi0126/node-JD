@@ -1,12 +1,12 @@
 import getters from './getter.js';
 const state = {
-    isShow: true,
+    isShow: false,
     isNavShow: true,
     userInfo: {}
 }
 const mutations = {
     showLoading: (state) => {
-        state.isShow = true
+        state.isShow = false
     },
     hideLoading: (state) => {
         state.isShow = false
