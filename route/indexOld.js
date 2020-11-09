@@ -1,16 +1,13 @@
 const express = require('express');
 const mysql = require('mysql');
 const common = require('../libs/common');
-const User = require('./models/user')
-
+const Sequelize = require('sequelize')
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'batar123',
     database: 'myigou'
 });
-
-
 
 //token私钥
 const PRIVATE_KEY = 'tokenKey'
@@ -203,13 +200,8 @@ module.exports = () => {
         let regName = mObj.regName;
         let regPasswd = mObj.regPasswd;
         regPasswd = common.md5(regPasswd + common.MD5_SUFFXIE);
-        console.log("注册信息：",regName,regPasswd,regName)
-                // 查询所有用户
-        const users = User.findAll();
-        // console.log(users.every(user => user instanceof User)); // true
-        console.log("All users:", JSON.stringify(users, null, 2));
-        // const insUserInfo = `INSERT INTO user(user_name,login_password,user_number) VALUES('${regName}','${regPasswd}','${regName}')`;
-        // delReg(insUserInfo, res);
+        const insUserInfo = `INSERT INTO user(user_name,login_password,user_number) VALUES('${regName}','${regPasswd}','${regName}')`;
+        delReg(insUserInfo, res);
     });
     /*
      *deal user register

@@ -7,10 +7,6 @@
             <HomeBannerView></HomeBannerView>
             <!--导航-->
             <HomeNavView></HomeNavView>
-            <!-- 淡入 -->
-            <transition name="van-fade">
-               <div>Fade</div>
-            </transition>
             <!--商品区-->
             <HomeMainView></HomeMainView>
         </div>
