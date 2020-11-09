@@ -211,7 +211,7 @@
 	</div>
 </template>
 <script>
-import { Dialog } from 'vant';
+import { Dialog,Toast } from 'vant';
 	export default{
 		components: {
 			[Dialog.Component.name]: Dialog.Component,
