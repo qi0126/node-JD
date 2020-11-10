@@ -5,7 +5,7 @@
 	        <form  class="goods_search" v-on:submit.prevent>
 	            <input type="saerch" class="goods_search_content" placeholder="搜索" v-model="keyword" @keyup.enter="goSearch($event)">
 	        </form>
-	        <a href="#" class="icon_menu"></a>
+	        <van-icon name="shop-o" class="goCartIcon" badge="9" size="20" @click="goCart"/>
     	</header>
 	    <section class="search_condition">
 	        <ul>
@@ -65,6 +65,9 @@
 			}
 		},
 		methods:{
+			goCart(){
+				this.$router.push('/cart')
+			},
 			goSearch(event){
 				let self = this;
 				if(self.keyword == ''){

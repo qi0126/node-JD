@@ -3,7 +3,7 @@
 		<header class="top_bar">
             <a onclick="window.history.go(-1)" class="icon_back"></a>
             <h3 class="cartname">商品详情</h3>
-            <a href="#" class="icon_menu"></a>
+            <van-icon name="shop-o" class="goCartIcon" badge="9" size="20" @click="goCart"/>
         </header>
         <main class="detail_box">
             <section class="banner_box">
@@ -60,11 +60,11 @@
             <div class="m">
                 <ul class="m_box">
                     <li class="m_item">
-                        <a href="" class="m_item_link">
+                        <a class="m_item_link">
                             <em class="m_item_pic"></em>
                             <span class="m_item_name">卖家</span>
                         </a>
-                        <a href="" class="m_item_link">
+                        <a class="m_item_link">
                             <em class="m_item_pic two"></em>
                             <span class="m_item_name">关注</span>
                         </a>
@@ -113,6 +113,9 @@
             }
         },
         methods:{
+            goCart(){
+				this.$router.push('/cart')
+			},
             onChange(index) {
                 this.current = index;
             },
