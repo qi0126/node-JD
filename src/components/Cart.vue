@@ -3,20 +3,7 @@
 		
 		<CartHeaderView></CartHeaderView>
 		<CartMainView></CartMainView>
-		<CartFooterView></CartFooterView>
-		<div class="pop" style="display: none">
-		    <div class="pop_box">
-		        <div class="del_info">
-		            确定要删除该商品吗？
-		        </div>
-		        <div class="del_cancel">
-		            取消
-		        </div>
-		        <div class="del_ok">
-		            确定
-		        </div>
-		    </div>
-		</div>
+		<!-- <CartFooterView></CartFooterView> -->
 	</div>
 </template>
 <script>

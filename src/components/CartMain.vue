@@ -41,9 +41,10 @@
 		                <div class="cart_product_sell">
 		                    <span class="product_money">￥<strong class="real_money">{{item.product_sPrice}}</strong>.00</span>
 		                    <div class="cart_add clearfix">
-		                        <span class="my_add">+</span>
+								<van-stepper v-model="item.goods_num" @change="changeNum(item)"/>
+		                        <!-- <span class="my_add">+</span>
 		                        <input type="tel" class="my_count" :value="item.goods_num">
-		                        <span class="my_jian">-</span>
+		                        <span class="my_jian">-</span> -->
 		                    </div>
 		                </div>
 		                <div class="cart_del clearfix" @click="delCart(item,indOne)">
@@ -57,14 +58,18 @@
 		      
 		    </div>
 			<div class="bottomH"></div>
+			<CartFooterView :sumObj="sumObj"></CartFooterView>
 		</main>
 </template>
 <script>
+ import CartFooterView from './CartFooter.vue';
 	import { Dialog,Toast } from 'vant';
 	export default{
 		components: {
 			[Dialog.Component.name]: Dialog.Component,
+			CartFooterView
 		},
+
 		data(){
 			return{
 				cartDatas:[],
@@ -84,17 +89,35 @@
 					console.log(err);
 				})
 			},
+			//修改购物车产品数量
+			changeNum(e){
+				let self = this
+				let params={
+					cart_id:e.cart_id,
+					goods_num:e.goods_num
+				}
+				self.$http.post('/changeCartNum',params).then((res)=>{
+					if(res.status == 200){
+						self.sumfun()
+					}else{
+						Toast( res.data.msg );
+					}
+				},(err)=>{
+					console.log(err);
+				});
+				
+			},
 			//统计总数量和总价格的方法
 			sumfun(){
 				// console.log(this.cartDatas)
 				this.sumObj={num:0,sumPrice:0}
 				this.cartDatas.forEach(ielem=>{
-					console.log("ielem:",ielem)
+					// console.log("ielem:",ielem)
 					ielem.product_sPrice = ielem.product_price * ielem.goods_num
 					this.sumObj.sumPrice += ielem.product_sPrice//总价格
 					this.sumObj.num += ielem.goods_num//总数量
 				})
-				console.log("总数量和总价格：",this.sumObj)
+				// console.log("总数量和总价格：",this.sumObj)
 			},
 			//跳转到产品详情页
 			toPro(e){
