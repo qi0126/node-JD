@@ -237,3 +237,11 @@ body {
     float: right;
     background-color: #F23030;
 }
+.bottomHOne{
+    height:60px;
+    background-color: #fff;
+    text-align: right;
+    line-height: 60px;
+    padding-right: 10px;
+
+}

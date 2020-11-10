@@ -7,6 +7,17 @@
         </header>
         <main class="detail_box">
             <section class="banner_box">
+                <!-- <van-swipe @change="onChange">
+                    <van-swipe-item>1</van-swipe-item>
+                    <van-swipe-item>2</van-swipe-item>
+                    <van-swipe-item>3</van-swipe-item>
+                    <van-swipe-item>4</van-swipe-item>
+                    <template #indicator>
+                        <div class="custom-indicator">
+                        {{ current + 1 }}/4
+                        </div>
+                    </template>
+                </van-swipe> -->
                 <ul class="banner_child_box">
                     <li class="banner_item" v-for="item in goodsImages">
                         <img v-lazy="item.image_url" alt="" class="banner_pic">
@@ -39,6 +50,9 @@
                     {{goodsData[0].product_detail}}
                 </p>
            </section>
+           <div class="bottomHOne">
+               <van-stepper v-model="proNum" />
+           </div>
           
         </main>
         <div class="bottomH"></div>
@@ -54,14 +68,14 @@
                             <em class="m_item_pic two"></em>
                             <span class="m_item_name">关注</span>
                         </a>
-                        <a href="" class="m_item_link">
+                        <a  class="m_item_link" @click="toCart">
                             <em class="m_item_pic three"></em>
                             <span class="m_item_name">购物车</span>
                         </a>
                     </li>
                 </ul>
                 <div class="btn_box clearfix" >
-                    <a href="#" class="buy_now">加入购物车</a>
+                    <a href="#" class="buy_now" @click="addCart">加入购物车</a>
                     <a href="#" class="buybuy">立即购买</a>
                 </div>
             </div>
@@ -69,7 +83,13 @@
 	</div>
 </template>
 <script>
+    import { Toast,Dialog,Swipe, SwipeItem,Lazyload } from 'vant';
+    Vue.use(Swipe);
+    Vue.use(SwipeItem);
    export default{
+       	components: {
+			[Dialog.Component.name]: Dialog.Component,
+		},
         mounted(){
             this.fetchData(this.$route.params.id);
         },
@@ -77,7 +97,9 @@
             return {
                 cateGoodsAllData:[],
                 goodsImages:[],
-                goodsData:[{}]
+                goodsData:[{}],
+                current: 0,
+                proNum: 1,
             }
         },
         watch:{
@@ -91,6 +113,9 @@
             }
         },
         methods:{
+            onChange(index) {
+                this.current = index;
+            },
             fetchData(id){
                 var self=this;
                 self.$http.get('/detail',{
@@ -104,10 +129,42 @@
                 },(err)=>{
                     console.log(err);
                 })
+            },
+            //跳到购物车
+            toCart(){
+                this.$router.push('/cart')
+            },
+            //加入购物车
+            addCart(){
+                let self = this
+                let params={
+                    user_id:JSON.parse(localStorage.userInfo).user_id,
+                    product_id:this.goodsData[0].product_id,
+                    goods_num:this.proNum
+                }
+                self.$http.post('/addCart',params).then((res)=>{
+                    if(res.status == 200){
+                        self.addCartObj = res.data.data;
+                        if(self.addCartObj.cart_id){
+                            Toast('加入购物车成功！');
+
+                        }else{
+                            Toast( res.data.msg );
+                        }
+                    }else{
+                        Toast( res.data.msg );
+                    }
+                },(err)=>{
+                    console.log(err);
+                });
             }
+
         }
     }
 </script>
 <style>
 @import '../assets/css/detail.css';
+.van-stepper{
+    background: #fff;
+}
 </style>

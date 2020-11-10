@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const common = require('../libs/common');
 const User = require('./models/user')
+const Cart = require('./models/cart')
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -135,7 +136,7 @@ module.exports = () => {
 
     });
     route.get('/cart', (req, res) => {
-        const cartStr = "SELECT cart_id,user.user_id,product.product_id,product_name,product_uprice,product_img_url,goods_num,product_num,shop_name FROM product,user,goods_cart,shop where product.product_id=goods_cart.product_id and user.user_id=goods_cart.user_id and shop.shop_id = product.shop_id";
+        const cartStr = "SELECT cart_id,user.user_id,product.product_id,product_name,product_price,product_uprice,product_img_url,goods_num,product_num,shop_name FROM product,user,goods_carts,shop where product.product_id=goods_carts.product_id and user.user_id=goods_carts.user_id and shop.shop_id = product.shop_id";
         db.query(cartStr, (err, data) => {
             if (err) {
                 console.log(err);
@@ -277,6 +278,7 @@ module.exports = () => {
             }
         });
     });
+    //用户信息修改
     route.post('/editUser', (req, res) => {
         
         let userInfoObj = {}
@@ -295,6 +297,35 @@ module.exports = () => {
           }).then(function (user) {
             res.status(200).send({ 'msg': '修改成功！', 'code': 200}).end();
          })
+    });
+    //产品加入购物车
+    route.post('/addCart', (req, res) => {
+        let cartObj = {}
+        for (let obj in req.body) {
+            cartObj = JSON.parse(obj)
+        }
+        Cart.create({
+            user_id:cartObj.user_id,
+            product_id:cartObj.product_id,
+            goods_num:cartObj.goods_num
+        }).then(function (cart) {
+            res.status(200).send({ 'msg': '创建购物车成功！',"data":cart, 'code': 200 }).end();
+         })
+    });
+    //购物车删除产品
+    route.post('/delCart', (req, res) => {
+        let cartObj = {}
+        for (let obj in req.body) {
+            cartObj = JSON.parse(obj)
+        }
+        console.log("cartObj:",cartObj,cartObj.cart_id)
+        Cart.destroy({
+            where:{
+                cart_id:cartObj.cart_id
+            }
+        }).then(cart=>{
+            res.status(200).send({ 'msg': '购物车删除成功！',"data":cart, 'code': 200 }).end();
+        })
     });
     return route;
 }

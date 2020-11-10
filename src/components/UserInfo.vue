@@ -98,7 +98,7 @@
 				.then(() => {
 					localStorage.removeItem('userInfo')
 					localStorage.removeItem('accesstoken')
-					this.$router.push("login")
+					this.$router.push("/login")
 				})
 				.catch(() => {
 					// on cancel

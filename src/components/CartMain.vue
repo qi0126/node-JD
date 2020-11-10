@@ -4,7 +4,7 @@
 		        <span>登录后可同步电脑与手机购物车中的商品</span>
 		        <a href="#" class="login">登录</a>
 		    </div>
-		    <div class="cart_content clearfix" v-for="item in cartDatas">
+		    <div class="cart_content clearfix" v-for="(item,indOne) in cartDatas">
 		        <div class="cart_shop clearfix">
 		            <div class="cart_check_box">
 		                <div class="check_box">
@@ -26,11 +26,11 @@
 		                </div>
 		            </div>
 		            <div class="cart_detial_box clearfix">
-		                <a href="#" class="cart_product_link">
+		                <a class="cart_product_link"  @click="toPro(item)">
 		                    <img v-lazy="item.product_img_url" alt="">
 		                </a>
-		                <div class="item_names">
-		                    <a href="#">
+		                <div class="item_names"  @click="toPro(item)">
+		                    <a>
 		                        <span>{{item.product_name}}</span>
 		                    </a>
 		                </div>
@@ -39,15 +39,15 @@
 		                    <span class="my_color">颜色:AT800/16</span>
 		                </div>
 		                <div class="cart_product_sell">
-		                    <span class="product_money">￥<strong class="real_money">{{item.product_uprice}}</strong>.00</span>
+		                    <span class="product_money">￥<strong class="real_money">{{item.product_sPrice}}</strong>.00</span>
 		                    <div class="cart_add clearfix">
 		                        <span class="my_add">+</span>
 		                        <input type="tel" class="my_count" :value="item.goods_num">
 		                        <span class="my_jian">-</span>
 		                    </div>
 		                </div>
-		                <div class="cart_del clearfix">
-		                    <div class="del_top">
+		                <div class="cart_del clearfix" @click="delCart(item,indOne)">
+		                    <div class="del_top" >
 		                    </div>
 		                    <div class="del_bottom">
 		                    </div>
@@ -57,15 +57,18 @@
 		      
 		    </div>
 			<div class="bottomH"></div>
-
-
 		</main>
 </template>
 <script>
+	import { Dialog,Toast } from 'vant';
 	export default{
+		components: {
+			[Dialog.Component.name]: Dialog.Component,
+		},
 		data(){
 			return{
 				cartDatas:[],
+				sumObj:{num:0,sumPrice:0}//总数量和总价格
 			}
 		},
 		mounted(){
@@ -76,9 +79,64 @@
 				let self = this;
 				self.$http.get('/cart').then((res)=>{
 					self.cartDatas = res.data;
+					self.sumfun()//统计总数量和总价格的方法
 				},(err)=>{
 					console.log(err);
 				})
+			},
+			//统计总数量和总价格的方法
+			sumfun(){
+				// console.log(this.cartDatas)
+				this.sumObj={num:0,sumPrice:0}
+				this.cartDatas.forEach(ielem=>{
+					console.log("ielem:",ielem)
+					ielem.product_sPrice = ielem.product_price * ielem.goods_num
+					this.sumObj.sumPrice += ielem.product_sPrice//总价格
+					this.sumObj.num += ielem.goods_num//总数量
+				})
+				console.log("总数量和总价格：",this.sumObj)
+			},
+			//跳转到产品详情页
+			toPro(e){
+				Dialog.confirm({
+					message: '确认跳转到产品详情面？'
+				})
+				.then(() => {
+					this.$router.push({path:`/detail/${e.product_id}`})
+				})
+				.catch(() => {
+					// on cancel
+				});
+			},
+			//购物车删除
+			delCart(e,ind){
+				let self = this
+				Dialog.confirm({
+					message: '确认删除？',
+				})
+				.then(() => {
+    
+					let params={
+						cart_id:e.cart_id,
+					}
+					self.$http.post('/delCart',params).then((res)=>{
+						if(res.status == 200){
+							Toast(res.data.msg);
+							setTimeout(_=>{
+								self.getCartDatas()
+							},1000)
+							
+						}else{
+							Toast( res.data.msg );
+						}
+					},(err)=>{
+						console.log(err);
+					});
+				})
+				.catch(() => {
+					// on cancel
+				});
+
 			}
 		}
 	}
