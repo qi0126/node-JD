@@ -218,7 +218,8 @@ import { Dialog,Toast } from 'vant';
 		},
 		data(){
 			return{
-				uInfs:{}
+				uInfs:{},
+				cartNum:0,//购物车产品数量
 			}
 		},
 		mounted(){
@@ -247,6 +248,7 @@ import { Dialog,Toast } from 'vant';
 					},(err)=>{
 						Toast( err.msg );
 					});
+
 				}else{
 					self.$router.push({
 						path:'/login',

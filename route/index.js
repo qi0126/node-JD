@@ -9,7 +9,7 @@ const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'batar123',
-    database: 'myigou'
+    database: 'minghuashop'
 });
 
 
@@ -25,7 +25,7 @@ module.exports = () => {
     function getToken(token){
         return new Promise(function(resolve, reject) {
             jwt.verify(token, PRIVATE_KEY, (err, decoded)=>{ // decoded:指的是tokneid解码后用户信息
-                console.log("token用户:",err,decoded)
+                // console.log("token用户:",err,decoded)
                 if (err) {   //如果tokenid过期则会执行err的代码块
                     reject(err) 
                 } else {
@@ -136,6 +136,7 @@ module.exports = () => {
                     cart_id,
                     users.user_id,
                     product.product_id,
+                    shop.shop_id,
                     product_name,
                     product_price,
                     product_uprice,
@@ -411,6 +412,50 @@ module.exports = () => {
           }).then(function (cart) {
             res.status(200).send({ 'msg': '修改数量成功！',data:cart, 'code': 200}).end();
          })
+    });
+    //读取购物车产品数量
+    route.get('/cartNum', (req, res) => {
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            const cartStr = `
+                SELECT
+                    cart_id,
+                    users.user_id,
+                    product.product_id,
+                    shop.shop_id,
+                    product_name,
+                    product_price,
+                    product_uprice,
+                    product_img_url,
+                    goods_num,
+                    product_num,
+                    shop_name
+                FROM
+                    product,
+                    users,
+                    goods_carts,
+                    shop
+                WHERE
+                    product.product_id = goods_carts.product_id
+                AND users.user_id = goods_carts.user_id
+                AND shop.shop_id = product.shop_id
+                AND goods_carts.user_id = ${userInfo.user_id}
+            `;
+            db.query(cartStr, (err, data) => {
+                if (err) {
+                    res.status(500).send('database err').end();
+                } else {
+                    if (data.length == 0) {
+                        res.status(200).send({code:200,msg:'查询成功！',cartNum:0}).end();
+                    } else {
+                        res.status(200).send({code:200,msg:'查询成功！',cartNum:data.length}).end();
+                    }
+                }
+            });
+        }).catch(err=>{
+            res.status(200).send({code:200,msg:'用户未登录！',cartNum:0}).end();
+        })
+
     });
     return route;
 }

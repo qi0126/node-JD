@@ -1,7 +1,7 @@
 
 const Sequelize = require('sequelize')
 const config = {
-    database:'myigou',
+    database:'minghuaShop',
     username:'root',
     password:'batar123',
     host:'localhost',

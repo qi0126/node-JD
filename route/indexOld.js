@@ -6,7 +6,7 @@ const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'batar123',
-    database: 'myigou'
+    database: 'minghuaShop'
 });
 
 //token私钥

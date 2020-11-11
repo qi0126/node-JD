@@ -237,7 +237,9 @@ body {
     height: 40px;
     position: absolute;
     left: 0;
-    top: 0;
+    display:flex;
+    top: 10px;
+    font-weight: bold;
 }
 
 .cart_footer .all_check_box .check_box {
@@ -374,4 +376,17 @@ body {
     text-align: center;
     padding:20px;
     font-size:16px;
+}
+.checkoutOne{
+    position: absolute;
+    top:10px;
+    left:5px;
+}
+.checkoutTwo{
+    position: absolute;
+    top:40px;
+    left:5px;
+}
+.checkoutAll{
+    margin: 0 10px;
 }

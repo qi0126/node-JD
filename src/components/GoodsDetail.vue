@@ -3,7 +3,7 @@
 		<header class="top_bar">
             <a onclick="window.history.go(-1)" class="icon_back"></a>
             <h3 class="cartname">商品详情</h3>
-            <van-icon name="shop-o" class="goCartIcon" badge="9" size="20" @click="goCart"/>
+            <van-icon name="shop-o" class="goCartIcon" :badge="cartNum" size="20" @click="goCart"/>
         </header>
         <main class="detail_box">
             <section class="banner_box">
@@ -92,6 +92,7 @@
 		},
         mounted(){
             this.fetchData(this.$route.params.id);
+            this.getCartNum()//购物车产品数量
         },
         data(){
             return {
@@ -99,7 +100,8 @@
                 goodsImages:[],
                 goodsData:[{}],
                 current: 0,
-                proNum: 1,
+                proNum: 1,//产品数量订购或加入购物车
+                cartNum:0
             }
         },
         watch:{
@@ -119,6 +121,15 @@
             onChange(index) {
                 this.current = index;
             },
+            //获取购物车产品数量
+            getCartNum(){
+				let self = this
+				self.$http.get('/cartNum').then((res)=>{
+					self.cartNum = res.data.cartNum
+				},(err)=>{
+					Toast( err.msg );
+				});
+			},
             fetchData(id){
                 var self=this;
                 self.$http.get('/detail',{
@@ -157,6 +168,7 @@
                     }else{
                         Toast( res.data.msg );
                     }
+                    self.getCartNum()//购物车产品数量
                 },(err)=>{
                     console.log(err);
                 });
