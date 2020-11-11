@@ -47,8 +47,7 @@ axios.interceptors.response.use(function(response) { //配置请求回来的信�
 axios.defaults.baseURL = 'http://localhost:3333/';
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 if (localStorage.accesstoken && localStorage.userInfo) {
-    store.dispatch('setUserInfo', localStorage.userInfo);
-    axios.defaults.headers.accessToken = localStorage.accesstoken//请求头带token
+    axios.defaults.headers.accessToken = localStorage.accesstoken?localStorage.accesstoken:''//请求头带token
 }
 
 Vue.prototype.$http = axios;

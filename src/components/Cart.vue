@@ -1,26 +1,23 @@
 <template>
 	<div id="my_cart">
 		
-		<CartHeaderView></CartHeaderView>
+		<!-- <CartHeaderView></CartHeaderView> -->
 		<CartMainView></CartMainView>
 		<!-- <CartFooterView></CartFooterView> -->
 	</div>
 </template>
 <script>
- import {check,animatDelBox} from '../assets/js/cart.js'	
- import CartHeaderView from './CartHeader.vue';
+//  import CartHeaderView from './CartHeader.vue';
  import CartMainView from './CartMain.vue';
- import CartFooterView from './CartFooter.vue';
+//  import CartFooterView from './CartFooter.vue';
 
  export default{
  	components:{
- 		CartHeaderView,
+ 		// CartHeaderView,
  		CartMainView,
- 		CartFooterView
+ 		// CartFooterView
  	},
  	mounted(){
- 		check();
- 		animatDelBox();
  	}
  }
 </script>

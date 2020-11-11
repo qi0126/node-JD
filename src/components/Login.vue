@@ -59,7 +59,10 @@ import { Dialog,Toast } from 'vant';
 									self.$router.push({
 										path: "Mine"
 									});
-								},1000)
+								},100)
+								setTimeout(_=>{
+									self.$router.go(0);
+								},200)
 							}else{
 								Toast( self.userInfo.msg );
 							}

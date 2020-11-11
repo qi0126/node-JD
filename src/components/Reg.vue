@@ -64,9 +64,15 @@
 									message: '注册成功，正在跳转！',
 								}).then(() => {
 									localStorage.userInfo = JSON.stringify(self.regInfo);
-									localStorage.accesstoken ="111"
+									localStorage.accesstoken =res.data.accesstoken
+									console.log(self.regInfo.accesstoken)
 									//reg success, go to this login page
-									self.$router.push({path:'mine'})
+									setTimeout(_=>{
+										self.$router.push({path:'mine'})
+									},100)
+									setTimeout(_=>{
+										self.$router.go(0);
+									},110)
 								});
 
 							}else{
