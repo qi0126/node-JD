@@ -21,10 +21,10 @@
             </section>
             <section class="product_info clearfix">
                 <div class="product_left">
-                    <p class="p_name">{{goodsData[0].product_name}}</p>
+                    <p class="p_name">{{goodsData.product_name}}</p>
                     <div class="product_pric">
                         <span>￥</span>
-                        <span class="rel_price">{{goodsData[0].product_price}}</span>
+                        <span class="rel_price">{{goodsData.product_price}}</span>
                         <span>.00</span>
                     </div>
                     <div class="product_right">
@@ -35,7 +35,7 @@
             </section>
             <section class="product_intro">
                 <p class="pro_det">
-                    {{goodsData[0].product_detail}}
+                    {{goodsData.product_detail}}
                 </p>
            </section>
            <div class="bottomHOne">
@@ -49,16 +49,19 @@
                 <ul class="m_box">
                     <li class="m_item">
                         <a class="m_item_link">
-                            <em class="m_item_pic"></em>
-                            <span class="m_item_name">卖家</span>
+                            <!-- <em class="m_item_pic"></em> -->
+                            <van-icon name="manager-o"  size="23"/>
+                            <div class="m_item_name">卖家</div>
                         </a>
                         <a class="m_item_link"  @click="toFlow">
-                            <em class="m_item_pic two"></em>
-                            <span class="m_item_name">关注</span>
+                            <!-- <em class="m_item_pic two"></em> -->
+                            <van-icon :name="goodsData.flowTF?'like':'like-o'" :color="goodsData.flowTF?'#e6a23c':'#000'" size="23"/>
+                            <div class="m_item_name" :style="{color:goodsData.flowTF?'#e6a23c':'#000'}">关注</div>
                         </a>
                         <a  class="m_item_link" @click="toCart">
-                            <em class="m_item_pic three"></em>
-                            <span class="m_item_name">购物车</span>
+                            <!-- <em class="m_item_pic three"></em> -->
+                            <van-icon name="shopping-cart-o"  size="23"/>
+                            <div class="m_item_name">购物车</div>
                         </a>
                     </li>
                 </ul>
@@ -71,9 +74,10 @@
 	</div>
 </template>
 <script>
-    import { Toast,Dialog,Swipe, SwipeItem,Lazyload } from 'vant';
+    import { Toast,Dialog,Swipe, SwipeItem,Lazyload,Icon  } from 'vant';
     Vue.use(Swipe);
     Vue.use(SwipeItem);
+    Vue.use(Icon);
     export default{
        	components: {
 			[Dialog.Component.name]: Dialog.Component,
@@ -126,8 +130,8 @@
                         mId: id
                     }
                 }).then((res)=>{
-                    self.goodsImages = res.data[0];
-                    self.goodsData = res.data[1];
+                    self.goodsImages = res.data.data.image;
+                    self.goodsData = res.data.data;
 
                 },(err)=>{
                     console.log(err);
@@ -139,14 +143,13 @@
             },
             //关注产品
             toFlow(){
-                console.log("产品信息：",this.goodsData[0])
                 let self = this
                 let params={
-                    product_id:this.goodsData[0].product_id,
+                    product_id:this.goodsData.product_id,
                 }
                 self.$http.post('/flowPro',params).then((res)=>{
                     if(res.status == 200){
-                         console.log("关注产品接口返回对象：",res)
+                         this.goodsData.flowTF = !this.goodsData.flowTF 
                     }else{
                         Toast( res.data.msg );
                     }
@@ -159,7 +162,7 @@
                 let self = this
                 let params={
                     user_id:JSON.parse(localStorage.userInfo).user_id,
-                    product_id:this.goodsData[0].product_id,
+                    product_id:this.goodsData.product_id,
                     goods_num:this.proNum
                 }
                 self.$http.post('/addCart',params).then((res)=>{

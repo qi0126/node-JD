@@ -28,9 +28,9 @@
 	        </div>
 	        <div class="yguanzhu_box">
 	            <ul class="gunzhuf">
-	                <li class="item">
-	                    <a href="" class="item_link">
-	                        <span>0</span>
+	                <li class="item" @click="toFlow">
+	                    <a class="item_link">
+	                        <span>{{flowNum}}</span>
 	                        <span>关注的商品</span>
 	                    </a>
 	                </li>
@@ -40,9 +40,9 @@
 	                        <span>关注的店铺</span>
 	                    </a>
 	                </li>
-	                <li class="item">
-	                    <a href="" class="item_link">
-	                        <span>8</span>
+	                <li class="item" @click="toHistory">
+	                    <a class="item_link">
+	                        <span>{{historyNum}}</span>
 	                        <span>浏览记录</span>
 	                    </a>
 	                </li>
@@ -220,10 +220,14 @@ import { Dialog,Toast } from 'vant';
 			return{
 				uInfs:{},
 				cartNum:0,//购物车产品数量
+				flowNum:0,//关注数量
+				historyNum:0,//浏览记录数量
 			}
 		},
 		mounted(){
 			this.getUDatas();
+			this.flowNumFun();//关注数量调接口
+			this.historyNumFun();//浏览记录数量调接口
 		},
 		methods:{
 			getUDatas(){
@@ -258,6 +262,32 @@ import { Dialog,Toast } from 'vant';
 			//编辑用户
 			editUser(){
 				this.$router.push({path:'userInfo',query:{userId:JSON.parse(localStorage.userInfo).user_id}})
+			},
+			//关注数量调接口
+			flowNumFun(){
+				let self = this
+				self.$http.get('/flowNum').then((res)=>{
+					self.flowNum = res.data.flowNum
+                },(err)=>{
+                    console.log(err);
+                })
+			},
+			//去关注产品页面
+			toFlow(){
+				this.$router.push('/flow')
+			},
+			//浏览记录数量调接口
+			historyNumFun(){
+				let self = this
+				self.$http.get('/historyNum').then((res)=>{
+					self.historyNum = res.data.historyNum
+                },(err)=>{
+                    console.log(err);
+                })
+			},
+			//去浏览记录产品页面
+			toHistory(){
+				this.$router.push('/history')
 			}
 		}
 	}

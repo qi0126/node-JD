@@ -6,7 +6,10 @@ import SearchPage from './components/SearchPage.vue'
 import Mine from './components/Mine.vue'
 import Login from './components/Login.vue'
 import Reg from './components/Reg.vue'
+import Flow from './components/Flow.vue'
 import UserInfo from './components/UserInfo.vue'
+import History from './components/History.vue'
+
 export default [{
     path: '/home',
     component: Home
@@ -22,6 +25,12 @@ export default [{
 }, {
     path: '/mine',
     component: Mine
+},{
+    path: '/flow',
+    component: Flow
+}, {
+    path: '/history',
+    component: History
 }, {
     path: '/login',
     component: Login
@@ -31,8 +40,7 @@ export default [{
 }, {
     path: '/userInfo',
     component: UserInfo
-},
- {
+},{
     path: '/catgory/:id',
     component: Category
 }, {

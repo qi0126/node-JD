@@ -307,3 +307,21 @@ body {
     font-family: "微软雅黑";
     font-size: 16px;
 }
+.not_eng_textOne{
+    color: #F11938;
+    font-weight: 800;
+    font-family: "微软雅黑";
+    font-size: 16px;
+}
+.timeTxt{
+    float:right;
+    font-size:12px;
+    color:#999;
+    font-weight: normal;
+}
+.titTxt{
+    padding:10px 0;
+    font-size:14px;
+    color:#666;
+}
+

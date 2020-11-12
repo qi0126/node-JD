@@ -5,6 +5,7 @@ const User = require('./models/user')
 const Cart = require('./models/cart')
 const Token = require('./models/token')//token表，登录时token会更新
 const Flow = require('./models/flow')//产品关注表
+const History = require('./models/History')//浏览记录表
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -108,28 +109,82 @@ module.exports = () => {
     }
     route.get('/detail', (req, res) => {
         let produId = req.query.mId;
+
         const imagesStr = `select image_url from product_image where product_id='${produId}'`;
         const productStr = `select * from product where product_id='${produId}'`;
-        let detailDatas = [];
         db.query(imagesStr, (err, imgDatas) => {
             if (err) {
                 console.error(err);
                 res.status(500).send('database err').end();
             } else {
-                detailDatas.push(imgDatas);
                 db.query(productStr, (err, data) => {
                     if (err) {
                         console.error(err);
                         res.status(500).send('database err').end();
                     } else {
-                        detailDatas.push(data);
-                        res.send(detailDatas);
+                        let proData = data[0]
+                        proData.image = imgDatas
+                        proData.flowTF = false
+                        // 获取前端请求头发送过来的accesstoken
+                        getToken(req.headers.accesstoken).then(userInfo=>{
+                            Flow.findAll().then(flows=>{
+                                flows.forEach(ielem=>{
+                                    let flowObj = ielem.dataValues
+                                    if(flowObj.user_id == userInfo.user_id && flowObj.product_id == proData.product_id){
+                                        proData.flowTF = true//有关注
+                                    }
+                                })
+                                res.status(200).send({code:200,msg:'查询成功！',data:proData}).end();
+                            })
+                            //浏览器表添加浏览纪录
+                            addHistory(userInfo.user_id,proData.product_id)
+                        }).catch(err=>{
+                            res.status(203).send({code:203,msg:'用户token信息失效，请重新登录！'}).end();
+                        })
                     }
                 });
             }
         });
 
     });
+    //浏览器表添加浏览纪录
+    function addHistory(userId,productId){
+        History.findAll().then(Historys=>{
+            let addTF = true//浏览器有浏览过为false,没有浏览器添加浏览表记录为true
+            
+            let editHistoryObj
+            Historys.forEach(ielem=>{
+                let historyObj = ielem.dataValues
+                // console.log("historyObj:",historyObj,userId,productId)
+                if(historyObj.user_id == userId && historyObj.product_id == productId){
+                    addTF = false//有关注
+                    editHistoryObj = historyObj
+                }
+            })
+            if(addTF){
+                //浏览表没有浏览过新增
+                History.create({
+                    user_id:userId,
+                    product_id:productId,
+                    time:1
+                }).then(histories=>{
+                    // console.log("histories:",histories)
+                })
+            }else{
+                //浏览过就表里次数time+1
+                History.update({
+                    time:editHistoryObj.time+1
+                },{
+                    where:{
+                        user_id:userId,
+                        product_id:productId
+                    }
+                })
+            }
+
+        })
+
+    }
     route.get('/cart', (req, res) => {
         // 获取前端请求头发送过来的accesstoken
         getToken(req.headers.accesstoken).then(userInfo=>{
@@ -421,48 +476,39 @@ module.exports = () => {
         for (let obj in req.body) {
             flowProObj = JSON.parse(obj)
         }
-        // 查询所有token有没有重复，没有就新建true，有就直接返回false
-        let addTF = true;
-        Flow.findAll().then(Flows=>{
-            // Flows.forEach(ielem=>{
-            //     if(flowProObj.user_id === ielem.user_id ){
-            //         addTF = false
-            //     }
-            // })
-            // 获取前端请求头发送过来的accesstoken
-            getToken(req.headers.accesstoken).then(userInfo=>{
-                if(addTF){
-                    //没有关注就新建
-                    console.log("aaaa:",{user_id:userInfo.user_id,product_id:flowProObj.product_id})
+        // 查询所有关注有没有重复，没有就新建true，有就直接返回false
+        let flowTF = true
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            Flow.findAll().then(flows=>{
+                flows.forEach(ielem=>{
+                    let flowObj = ielem.dataValues
+                    if(flowObj.user_id == userInfo.user_id && flowObj.product_id == flowProObj.product_id){
+                        flowTF = false//有关注，就取消关注，删除flow关注表记录
+                    }
+                })
+                if(flowTF){
+                    //无关注，添加flow关注表记录
                     Flow.create({user_id:userInfo.user_id,product_id:flowProObj.product_id}).then((FlowsOne)=> {
-                        console.log("FlowsOne:",FlowsOne)
-                        res.status(200).send({code:200,data:Flows,msg:'关注产品成功！'}).end();
+                        res.status(200).send({code:200,msg:'关注产品成功！'}).end();
                     })
-                    
                 }else{
-                    // Token.update({token:tokenT}, {
-                    //     where: {
-                    //         user_id: dataw.user_id
-                    //     }
-                    //     }).then(function (token) {
-                    //     //有就直接返回token表里的表里的token
-                    //     dataw.accesstoken = tokenT//token输
-                    //     res.status(200).send(dataw).end();
-                    //     })
+                    //有关注，就取消关注，删除flow关注表记录
+                    Flow.destroy({
+                        where:{
+                            user_id:userInfo.user_id,
+                            product_id:flowProObj.product_id
+                        }
+                    }).then(flow=>{
+                        res.status(200).send({code:200,msg:'取消关注产品成功'}).end();
+                    })
                 }
-            }).catch(err=>{
-                res.status(203).send({code:203,msg:'用户token信息失效，请重新登录！'}).end();
+                
             })
-
+        }).catch(err=>{
+            res.status(203).send({code:203,msg:'用户token信息失效，请重新登录！'}).end();
         })
-        // Cart.update({goods_num:cartObj.goods_num}, {
-        //     where: {
-        //         cart_id: cartObj.cart_id
-        // }
-        // }).then(function (cart) {
-        // res.status(200).send({ 'msg': '修改数量成功！',data:cart, 'code': 200}).end();
-        // })
-    });
+    })
     //读取购物车产品数量
     route.get('/cartNum', (req, res) => {
         // 获取前端请求头发送过来的accesstoken
@@ -504,6 +550,112 @@ module.exports = () => {
             });
         }).catch(err=>{
             res.status(200).send({code:200,msg:'用户未登录！',cartNum:0}).end();
+        })
+
+    });
+    //用户关注产品数量
+    route.get('/flowNum', (req, res) => {
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            Flow.findAll({
+                where:{user_id:userInfo.user_id,
+            }}).then(flows=>{
+                res.status(200).send({code:200,msg:'查询成功！',flowNum:flows.length}).end();
+            })
+        }).catch(err=>{
+            res.status(200).send({code:200,msg:'用户未登录！',flowNum:0}).end();
+        })
+
+    });
+    //用户关注产品
+    route.get('/flow', (req, res) => {
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            const flowStr = `
+            SELECT
+                flows.user_id,
+                product.product_id,
+                product_name,
+                product_price,
+                product_uprice,
+                product_img_url,
+                product_num
+            FROM
+                product,
+                flows
+            WHERE
+                flows.user_id = ${userInfo.user_id}
+            AND flows.product_id = product.product_id
+
+        `;
+        db.query(flowStr, (err, data) => {
+            
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                if (data.length == 0) {
+                    res.status(200).send({code:200,msg:'查询成功！',flowNum:0,data:[]}).end();
+                } else {
+                    res.status(200).send({code:200,msg:'查询成功！',flowNum:data.length,data}).end();
+                }
+            }
+        });
+        }).catch(err=>{
+            res.status(200).send({code:200,msg:'用户未登录！',flowNum:0}).end();
+        })
+
+    });
+    
+    //用户浏览产品数量
+    route.get('/historyNum', (req, res) => {
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            History.findAll({
+                where:{user_id:userInfo.user_id,
+            }}).then(historys=>{
+                res.status(200).send({code:200,msg:'查询成功！',historyNum:historys.length}).end();
+            })
+        }).catch(err=>{
+            res.status(200).send({code:200,msg:'用户未登录！',historyNum:0}).end();
+        })
+
+    });
+    //用户浏览产品
+    route.get('/history', (req, res) => {
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            const flowStr = `
+            SELECT
+                histories.user_id,
+                product.product_id,
+                product_name,
+                product_price,
+                product_uprice,
+                product_img_url,
+                product_num,
+                histories.time,
+                histories.updatedAt
+            FROM
+                product,
+                histories
+            WHERE
+            histories.user_id = ${userInfo.user_id}
+            AND histories.product_id = product.product_id
+            ORDER BY updatedAt DESC
+        `;
+        db.query(flowStr, (err, data) => {
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                if (data.length == 0) {
+                    res.status(200).send({code:200,msg:'查询成功！',historyNum:0,data:[]}).end();
+                } else {
+                    res.status(200).send({code:200,msg:'查询成功！',historyNum:data.length,data}).end();
+                }
+            }
+        });
+        }).catch(err=>{
+            res.status(200).send({code:200,msg:'用户未登录！',flowNum:0}).end();
         })
 
     });
