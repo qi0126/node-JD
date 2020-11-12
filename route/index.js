@@ -3,7 +3,8 @@ const mysql = require('mysql');
 const common = require('../libs/common');
 const User = require('./models/user')
 const Cart = require('./models/cart')
-const Token = require('./models/token')
+const Token = require('./models/token')//token表，登录时token会更新
+const Flow = require('./models/flow')//产品关注表
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -40,6 +41,7 @@ module.exports = () => {
     const getCateNames = `SELECT * FROM category ORDER BY category_id desc`;
     //get homePage datas
     route.get('/home', (req, res) => {
+      // 查询所有用户
         getHomeDatas(getHomeStr, res);
     });
     function getHomeDatas(getHomeStr, res) {
@@ -412,6 +414,54 @@ module.exports = () => {
           }).then(function (cart) {
             res.status(200).send({ 'msg': '修改数量成功！',data:cart, 'code': 200}).end();
          })
+    });
+    //产品关注和取消关注
+    route.post('/flowPro', (req, res) => {
+        let flowProObj = {}
+        for (let obj in req.body) {
+            flowProObj = JSON.parse(obj)
+        }
+        // 查询所有token有没有重复，没有就新建true，有就直接返回false
+        let addTF = true;
+        Flow.findAll().then(Flows=>{
+            // Flows.forEach(ielem=>{
+            //     if(flowProObj.user_id === ielem.user_id ){
+            //         addTF = false
+            //     }
+            // })
+            // 获取前端请求头发送过来的accesstoken
+            getToken(req.headers.accesstoken).then(userInfo=>{
+                if(addTF){
+                    //没有关注就新建
+                    console.log("aaaa:",{user_id:userInfo.user_id,product_id:flowProObj.product_id})
+                    Flow.create({user_id:userInfo.user_id,product_id:flowProObj.product_id}).then((FlowsOne)=> {
+                        console.log("FlowsOne:",FlowsOne)
+                        res.status(200).send({code:200,data:Flows,msg:'关注产品成功！'}).end();
+                    })
+                    
+                }else{
+                    // Token.update({token:tokenT}, {
+                    //     where: {
+                    //         user_id: dataw.user_id
+                    //     }
+                    //     }).then(function (token) {
+                    //     //有就直接返回token表里的表里的token
+                    //     dataw.accesstoken = tokenT//token输
+                    //     res.status(200).send(dataw).end();
+                    //     })
+                }
+            }).catch(err=>{
+                res.status(203).send({code:203,msg:'用户token信息失效，请重新登录！'}).end();
+            })
+
+        })
+        // Cart.update({goods_num:cartObj.goods_num}, {
+        //     where: {
+        //         cart_id: cartObj.cart_id
+        // }
+        // }).then(function (cart) {
+        // res.status(200).send({ 'msg': '修改数量成功！',data:cart, 'code': 200}).end();
+        // })
     });
     //读取购物车产品数量
     route.get('/cartNum', (req, res) => {

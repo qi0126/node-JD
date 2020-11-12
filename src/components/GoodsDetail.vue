@@ -7,17 +7,6 @@
         </header>
         <main class="detail_box">
             <section class="banner_box">
-                <!-- <van-swipe @change="onChange">
-                    <van-swipe-item>1</van-swipe-item>
-                    <van-swipe-item>2</van-swipe-item>
-                    <van-swipe-item>3</van-swipe-item>
-                    <van-swipe-item>4</van-swipe-item>
-                    <template #indicator>
-                        <div class="custom-indicator">
-                        {{ current + 1 }}/4
-                        </div>
-                    </template>
-                </van-swipe> -->
                 <ul class="banner_child_box">
                     <li class="banner_item" v-for="item in goodsImages">
                         <img v-lazy="item.image_url" alt="" class="banner_pic">
@@ -29,7 +18,6 @@
                         <em class="nub-bg">/</em>
                         <em id="slide-sum" class="fz12">5</em>
                 </div>
-
             </section>
             <section class="product_info clearfix">
                 <div class="product_left">
@@ -64,7 +52,7 @@
                             <em class="m_item_pic"></em>
                             <span class="m_item_name">卖家</span>
                         </a>
-                        <a class="m_item_link">
+                        <a class="m_item_link"  @click="toFlow">
                             <em class="m_item_pic two"></em>
                             <span class="m_item_name">关注</span>
                         </a>
@@ -86,13 +74,14 @@
     import { Toast,Dialog,Swipe, SwipeItem,Lazyload } from 'vant';
     Vue.use(Swipe);
     Vue.use(SwipeItem);
-   export default{
+    export default{
        	components: {
 			[Dialog.Component.name]: Dialog.Component,
 		},
         mounted(){
             this.fetchData(this.$route.params.id);
             this.getCartNum()//购物车产品数量
+
         },
         data(){
             return {
@@ -147,6 +136,23 @@
             //跳到购物车
             toCart(){
                 this.$router.push('/cart')
+            },
+            //关注产品
+            toFlow(){
+                console.log("产品信息：",this.goodsData[0])
+                let self = this
+                let params={
+                    product_id:this.goodsData[0].product_id,
+                }
+                self.$http.post('/flowPro',params).then((res)=>{
+                    if(res.status == 200){
+                         console.log("关注产品接口返回对象：",res)
+                    }else{
+                        Toast( res.data.msg );
+                    }
+                },(err)=>{
+                    console.log(err);
+                });
             },
             //加入购物车
             addCart(){
