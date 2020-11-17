@@ -44,7 +44,7 @@ axios.interceptors.response.use(function(response) { //配置请求回来的信�
 }, function(error) {
     return Promise.reject(error);
 });
-axios.defaults.baseURL = 'http://localhost:3333/';
+axios.defaults.baseURL = 'http://192.168.33.84:3333/';
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 if (localStorage.accesstoken && localStorage.userInfo) {
     axios.defaults.headers.accessToken = localStorage.accesstoken?localStorage.accesstoken:''//请求头带token

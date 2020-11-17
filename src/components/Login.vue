@@ -49,25 +49,20 @@ import { Dialog,Toast } from 'vant';
 						loginName:self.username,
 						loginPawd:self.password,
 					}).then((res)=>{
-						if(res.status == 200){
-							self.userInfo = res.data;
-							if(self.userInfo.status == 200){
-								//LOGIN success
-								localStorage.userInfo = JSON.stringify(self.userInfo);
-								localStorage.accesstoken = self.userInfo.accesstoken
-								setTimeout(_=>{
-									self.$router.push({
-										path: "Mine"
-									});
-								},100)
-								setTimeout(_=>{
-									self.$router.go(0);
-								},200)
-							}else{
-								Toast( self.userInfo.msg );
-							}
+						if(res.data.code == 200){
+							self.userInfo = res.data.data;
+							localStorage.userInfo = JSON.stringify(self.userInfo);
+							localStorage.accesstoken = self.userInfo.accesstoken
+							setTimeout(_=>{
+								self.$router.push({
+									path: "Mine"
+								});
+							},100)
+							setTimeout(_=>{
+								self.$router.go(0);
+							},200)
 						}else{
-							alert('请求出现错误');
+							Toast(res.data.msg)
 						}
 					},(err)=>{
 						console.log(err);

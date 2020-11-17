@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : 本地
 Source Server Version : 50712
 Source Host           : localhost:3306
-Source Database       : myigou
+Source Database       : minghuashop
 
 Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-11-11 16:09:09
+Date: 2020-11-17 16:12:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,51 +42,53 @@ INSERT INTO `address` VALUES ('8', '1', 'csacsacsa', '0', '18389379777', '广西
 INSERT INTO `address` VALUES ('10', '3', 'csaca', '1', '18389379755', '海南海口秀英区', 'huangche');
 
 -- ----------------------------
--- Table structure for category
+-- Table structure for categories
 -- ----------------------------
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE `category` (
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
   `category_id` int(100) NOT NULL AUTO_INCREMENT,
   `category_pid` int(11) DEFAULT NULL,
   `category_name` varchar(200) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of category
+-- Records of categories
 -- ----------------------------
-INSERT INTO `category` VALUES ('3', '100001', '女装');
-INSERT INTO `category` VALUES ('4', '100001', '男装');
-INSERT INTO `category` VALUES ('5', '100001', '童装');
-INSERT INTO `category` VALUES ('6', '100002', '皮鞋');
-INSERT INTO `category` VALUES ('7', '100002', '运动鞋');
-INSERT INTO `category` VALUES ('8', '100002', '休闲鞋');
-INSERT INTO `category` VALUES ('9', '100002', '高帮鞋');
-INSERT INTO `category` VALUES ('10', '100002', '帆布鞋');
-INSERT INTO `category` VALUES ('11', '100002', '靴子');
-INSERT INTO `category` VALUES ('12', '100003', '冰箱');
-INSERT INTO `category` VALUES ('13', '100003', '洗衣机');
-INSERT INTO `category` VALUES ('14', '100003', '平板电视');
-INSERT INTO `category` VALUES ('15', '100003', '空调');
-INSERT INTO `category` VALUES ('16', '100003', '烟灶消套装');
-INSERT INTO `category` VALUES ('17', '100004', '数码相机');
-INSERT INTO `category` VALUES ('18', '100004', '单反相机');
-INSERT INTO `category` VALUES ('19', '100004', '摄像机');
-INSERT INTO `category` VALUES ('20', '100004', '长焦相机');
-INSERT INTO `category` VALUES ('21', '100005', '居家');
-INSERT INTO `category` VALUES ('22', '100005', '饰物');
-INSERT INTO `category` VALUES ('23', '100005', '玩具');
-INSERT INTO `category` VALUES ('24', '100005', '文具');
-INSERT INTO `category` VALUES ('25', '100006', '西式糕点');
-INSERT INTO `category` VALUES ('26', '100006', '饼干');
-INSERT INTO `category` VALUES ('27', '100006', '肌肉类零食');
-INSERT INTO `category` VALUES ('28', '100006', '糖果');
-INSERT INTO `category` VALUES ('29', '100007', '拉杠箱');
-INSERT INTO `category` VALUES ('30', '100007', '登机箱');
-INSERT INTO `category` VALUES ('31', '100007', '旅行包');
-INSERT INTO `category` VALUES ('32', '100007', '双肩包');
-INSERT INTO `category` VALUES ('33', '100007', '托运箱');
-INSERT INTO `category` VALUES ('34', '100004', '手机');
+INSERT INTO `categories` VALUES ('3', '100001', '女装', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('4', '100001', '男装', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('5', '100001', '童装', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('6', '100002', '皮鞋', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('7', '100002', '运动鞋', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('8', '100002', '休闲鞋', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('9', '100002', '高帮鞋', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('10', '100002', '帆布鞋', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('11', '100002', '靴子', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('12', '100003', '冰箱', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('13', '100003', '洗衣机', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('14', '100003', '平板电视', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('15', '100003', '空调', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('16', '100003', '烟灶消套装', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('17', '100004', '数码相机', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('18', '100004', '单反相机', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('19', '100004', '摄像机', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('20', '100004', '长焦相机', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('21', '100005', '居家', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('22', '100005', '饰物', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('23', '100005', '玩具', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('24', '100005', '文具', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('25', '100006', '西式糕点', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('26', '100006', '饼干', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('27', '100006', '肌肉类零食', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('28', '100006', '糖果', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('29', '100007', '拉杠箱', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('30', '100007', '登机箱', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('31', '100007', '旅行包', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('32', '100007', '双肩包', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('33', '100007', '托运箱', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `categories` VALUES ('34', '100004', '手机', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for collect
@@ -106,6 +108,28 @@ CREATE TABLE `collect` (
 -- ----------------------------
 -- Records of collect
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for flows
+-- ----------------------------
+DROP TABLE IF EXISTS `flows`;
+CREATE TABLE `flows` (
+  `user_id` bigint(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of flows
+-- ----------------------------
+INSERT INTO `flows` VALUES ('2', '118', '2020-11-12 01:56:18', '2020-11-12 01:56:18');
+INSERT INTO `flows` VALUES ('2', '6', '2020-11-12 03:07:03', '2020-11-12 03:07:03');
+INSERT INTO `flows` VALUES ('2', '9', '2020-11-12 03:07:10', '2020-11-12 03:07:10');
+INSERT INTO `flows` VALUES ('2', '12', '2020-11-12 03:07:13', '2020-11-12 03:07:13');
+INSERT INTO `flows` VALUES ('2', '7', '2020-11-12 03:07:17', '2020-11-12 03:07:17');
+INSERT INTO `flows` VALUES ('2', '14', '2020-11-12 03:07:26', '2020-11-12 03:07:26');
+INSERT INTO `flows` VALUES ('1', '4', '2020-11-12 05:59:16', '2020-11-12 05:59:16');
 
 -- ----------------------------
 -- Table structure for goods_cart
@@ -147,7 +171,7 @@ CREATE TABLE `goods_carts` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`cart_id`),
   UNIQUE KEY `cart_id` (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goods_carts
@@ -162,6 +186,40 @@ INSERT INTO `goods_carts` VALUES ('34', '1', '120', '9', null, '2020-11-11 07:42
 INSERT INTO `goods_carts` VALUES ('35', '1', '122', '2', null, '2020-11-11 07:51:42', '2020-11-11 07:53:17');
 INSERT INTO `goods_carts` VALUES ('36', '1', '119', '6', null, '2020-11-11 07:52:29', '2020-11-11 07:53:17');
 INSERT INTO `goods_carts` VALUES ('37', '1', '9', '3', null, '2020-11-11 07:52:58', '2020-11-11 07:53:17');
+INSERT INTO `goods_carts` VALUES ('38', '1', '155', '20', null, '2020-11-11 08:16:28', '2020-11-11 08:16:34');
+INSERT INTO `goods_carts` VALUES ('39', '2', '4', '4', null, '2020-11-12 01:09:42', '2020-11-12 01:09:45');
+
+-- ----------------------------
+-- Table structure for histories
+-- ----------------------------
+DROP TABLE IF EXISTS `histories`;
+CREATE TABLE `histories` (
+  `user_id` bigint(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of histories
+-- ----------------------------
+INSERT INTO `histories` VALUES ('2', '5', '2', '2020-11-12 05:41:37', '2020-11-12 05:48:35');
+INSERT INTO `histories` VALUES ('2', '3', '6', '2020-11-12 05:41:42', '2020-11-12 05:41:45');
+INSERT INTO `histories` VALUES ('2', '8', '4', '2020-11-12 05:41:47', '2020-11-12 05:41:50');
+INSERT INTO `histories` VALUES ('2', '13', '1', '2020-11-12 05:49:02', '2020-11-12 05:49:02');
+INSERT INTO `histories` VALUES ('2', '122', '2', '2020-11-12 05:57:47', '2020-11-12 05:57:58');
+INSERT INTO `histories` VALUES ('1', '120', '2', '2020-11-12 05:58:25', '2020-11-12 06:25:47');
+INSERT INTO `histories` VALUES ('1', '3', '24', '2020-11-12 05:58:39', '2020-11-17 07:41:21');
+INSERT INTO `histories` VALUES ('1', '4', '12', '2020-11-12 05:58:43', '2020-11-17 02:46:06');
+INSERT INTO `histories` VALUES ('1', '117', '3', '2020-11-12 06:25:50', '2020-11-12 06:26:17');
+INSERT INTO `histories` VALUES ('1', '118', '1', '2020-11-12 06:42:41', '2020-11-12 06:42:41');
+INSERT INTO `histories` VALUES ('1', '16', '1', '2020-11-12 07:49:35', '2020-11-12 07:49:35');
+INSERT INTO `histories` VALUES ('1', '5', '6', '2020-11-13 00:50:56', '2020-11-13 01:27:37');
+INSERT INTO `histories` VALUES ('1', '79', '1', '2020-11-13 00:57:23', '2020-11-13 00:57:23');
+INSERT INTO `histories` VALUES ('1', '69', '1', '2020-11-13 00:57:33', '2020-11-13 00:57:33');
+INSERT INTO `histories` VALUES ('1', '122', '2', '2020-11-13 01:43:09', '2020-11-17 07:42:32');
+INSERT INTO `histories` VALUES ('1', '123', '1', '2020-11-13 02:57:11', '2020-11-13 02:57:11');
 
 -- ----------------------------
 -- Table structure for lhg_city
@@ -3450,6 +3508,8 @@ CREATE TABLE `orders` (
   `flag` varchar(11) DEFAULT NULL,
   `buid_time` varchar(200) DEFAULT NULL,
   `orderno` varchar(200) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `product_id` (`product_id`),
   KEY `user_id` (`user_id`),
@@ -3464,14 +3524,14 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('3', '150', '128.00', '3', '384.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '9563402100');
-INSERT INTO `orders` VALUES ('4', '11', '155.00', '2', '310.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '5963401800');
-INSERT INTO `orders` VALUES ('5', '122', '5598.00', '1', '5598.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '8462301700');
-INSERT INTO `orders` VALUES ('6', '106', '149.00', '1', '149.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '7452390600');
-INSERT INTO `orders` VALUES ('7', '113', '179.00', '2', '358.00', '3', '10', '11', '1', 'add_order', '2016-04-11 13:47:30', '5673821900');
-INSERT INTO `orders` VALUES ('8', '12', '399.00', '1', '399.00', '3', '10', '11', '1', 'add_order', '2016-04-11 13:47:30', '0369541800');
-INSERT INTO `orders` VALUES ('9', '107', '169.00', '1', '169.00', '3', '10', '11', '1', 'add_order', '2016-04-11 13:47:30', '5827901600');
-INSERT INTO `orders` VALUES ('10', '154', '149.00', '1', '149.00', '3', '10', '11', '0', 'add_order', '2016-04-11 13:52:32', '3017856200');
+INSERT INTO `orders` VALUES ('3', '150', '128.00', '3', '384.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '9563402100', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('4', '11', '155.00', '2', '310.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '5963401800', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('5', '122', '5598.00', '1', '5598.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '8462301700', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('6', '106', '149.00', '1', '149.00', '1', '2', '11', '0', 'add_order', '2016-04-04 07:21:25', '7452390600', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('7', '113', '179.00', '2', '358.00', '3', '10', '11', '1', 'add_order', '2016-04-11 13:47:30', '5673821900', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('8', '12', '399.00', '1', '399.00', '3', '10', '11', '1', 'add_order', '2016-04-11 13:47:30', '0369541800', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('9', '107', '169.00', '1', '169.00', '3', '10', '11', '1', 'add_order', '2016-04-11 13:47:30', '5827901600', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `orders` VALUES ('10', '154', '149.00', '1', '149.00', '3', '10', '11', '0', 'add_order', '2016-04-11 13:52:32', '3017856200', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for product
@@ -3492,8 +3552,8 @@ CREATE TABLE `product` (
   `product_special` int(11) DEFAULT NULL,
   `product_search_hot` int(8) DEFAULT NULL,
   PRIMARY KEY (`product_id`),
-  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `category` (`category_id`),
-  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `shop` (`shop_id`)
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `categories` (`category_id`),
+  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `shops` (`shop_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -4638,371 +4698,373 @@ INSERT INTO `product_image` VALUES ('920', '238', 'https://img.alicdn.com/imgext
 INSERT INTO `product_image` VALUES ('921', '239', 'https://img.alicdn.com/bao/uploaded/i1/TB1QniHLpXXXXatXXXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg');
 
 -- ----------------------------
--- Table structure for shop
+-- Table structure for shops
 -- ----------------------------
-DROP TABLE IF EXISTS `shop`;
-CREATE TABLE `shop` (
+DROP TABLE IF EXISTS `shops`;
+CREATE TABLE `shops` (
   `shop_id` int(100) NOT NULL AUTO_INCREMENT,
   `shop_name` varchar(200) DEFAULT NULL,
   `shop_address` varchar(400) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`shop_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=419 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of shop
+-- Records of shops
 -- ----------------------------
-INSERT INTO `shop` VALUES ('1', '素缕旗舰店', '山东济南', '3');
-INSERT INTO `shop` VALUES ('2', 'S家原创设计女装', '四川成都', '3');
-INSERT INTO `shop` VALUES ('3', '七七之缘', '广东惠州', '3');
-INSERT INTO `shop` VALUES ('4', '默默家精品女装', '浙江杭州', '3');
-INSERT INTO `shop` VALUES ('5', '韩舍艳旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('6', '粉红大布娃娃', '上海', null);
-INSERT INTO `shop` VALUES ('7', '顺淘企业店铺', '广东广州', null);
-INSERT INTO `shop` VALUES ('8', '歌慕妮旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('9', '阿姐家', '浙江温州', null);
-INSERT INTO `shop` VALUES ('10', 'e尚小站旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('11', '黛蜜妃女装旗舰店', '河南郑州', null);
-INSERT INTO `shop` VALUES ('12', '怡然有衣街拍时尚', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('13', '薇漫蕾旗舰店', '河南郑州', null);
-INSERT INTO `shop` VALUES ('14', '悦风铃旗舰店', '浙江宁波', null);
-INSERT INTO `shop` VALUES ('15', '泌彩流纱旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('16', '井薇家店主实拍欧韩范', '广东广州', null);
-INSERT INTO `shop` VALUES ('17', 'TWICELIFE 韩风女装', '广东广州', null);
-INSERT INTO `shop` VALUES ('18', '温莎芭莎旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('19', '歌诗娅女装', '广东广州', null);
-INSERT INTO `shop` VALUES ('20', 'omont服饰旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('21', '慕兮旗舰店', '广东深圳', null);
-INSERT INTO `shop` VALUES ('22', '九美雪狐连锁店', '北京', null);
-INSERT INTO `shop` VALUES ('23', '悦风铃旗舰店', '浙江宁波', null);
-INSERT INTO `shop` VALUES ('24', 'qfour旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('25', '小诗原创设计', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('26', '库恩玛维旗舰店', '江苏连云港', null);
-INSERT INTO `shop` VALUES ('27', 'MOKA中韩合营店', '广东广州', null);
-INSERT INTO `shop` VALUES ('28', 'Ar show 艾日秀', '江苏无锡', null);
-INSERT INTO `shop` VALUES ('29', '红相竹旗舰店', '广东东莞', null);
-INSERT INTO `shop` VALUES ('30', '诺茵祥服饰总店', '四川成都', null);
-INSERT INTO `shop` VALUES ('31', '百变伊伊', '广东广州', null);
-INSERT INTO `shop` VALUES ('32', 'Shezshow 熙之秀女装', '广东广州', null);
-INSERT INTO `shop` VALUES ('33', '依形于色旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('34', '柚子美衣韩版爆款店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('35', '富多莉服饰专营店', '广东广州', null);
-INSERT INTO `shop` VALUES ('36', '美人鱼 日韩潮流女装', '广东广州', null);
-INSERT INTO `shop` VALUES ('37', '穿花点水旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('38', '依名美旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('39', '女神范私人定制', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('40', 'Jenney珍妮衣橱', '广东广州', null);
-INSERT INTO `shop` VALUES ('41', '恰那时花开', '广东揭阳', null);
-INSERT INTO `shop` VALUES ('42', '潮流前线购', '香港香港岛', null);
-INSERT INTO `shop` VALUES ('43', '香港正品女装名媛店', '福建厦门', null);
-INSERT INTO `shop` VALUES ('44', '芸寇旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('45', '茵曼自营店', '广东广州', null);
-INSERT INTO `shop` VALUES ('46', '恋色倾曼服饰旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('47', '丽人庄潮流女装', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('48', '慕娜时尚女装店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('49', '芷蔓服装', '广东广州', null);
-INSERT INTO `shop` VALUES ('50', '索耳旗舰店', '河南郑州', null);
-INSERT INTO `shop` VALUES ('51', '随衣服饰旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('52', '妙楚旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('53', '昕薇旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('54', '骆汐 大厂直供中高端女装', '福建宁德', null);
-INSERT INTO `shop` VALUES ('55', '米欧奈旗舰店', '广东东莞', null);
-INSERT INTO `shop` VALUES ('56', '卓越非凡衣橱', '上海', null);
-INSERT INTO `shop` VALUES ('57', '半妆服饰品牌店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('58', '粉红大布娃娃云时尚专卖店', '上海', null);
-INSERT INTO `shop` VALUES ('59', '星尚主流の女装', '吉林延边朝鲜族', null);
-INSERT INTO `shop` VALUES ('60', '七月天使JulyStudio', '黑龙江哈尔滨', null);
-INSERT INTO `shop` VALUES ('61', '奢娜旗舰店', '广东深圳', null);
-INSERT INTO `shop` VALUES ('62', '梦妮原创女装', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('63', '路边滴新娘', '浙江嘉兴', null);
-INSERT INTO `shop` VALUES ('64', '夏天家 韩国潮流女装', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('65', 'Shes Story', '浙江嘉兴', null);
-INSERT INTO `shop` VALUES ('66', '夏阳美衣多风格快时尚', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('67', 'Zara香港专业代购', '香港香港岛', null);
-INSERT INTO `shop` VALUES ('68', '依乐蜜', '浙江嘉兴', null);
-INSERT INTO `shop` VALUES ('69', '香港爱美汇', '广东惠州', null);
-INSERT INTO `shop` VALUES ('70', '韩都衣舍惟真专卖店', '山东济南', null);
-INSERT INTO `shop` VALUES ('71', '不定义专柜店', '广东东莞', null);
-INSERT INTO `shop` VALUES ('72', '飞絮游丝旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('73', '银色衣馆', '上海', null);
-INSERT INTO `shop` VALUES ('74', '意树旗舰店', '上海', null);
-INSERT INTO `shop` VALUES ('75', '巴黎格调男装专场', '福州', null);
-INSERT INTO `shop` VALUES ('76', 'amii铭致专卖店', '浙江宁波', null);
-INSERT INTO `shop` VALUES ('77', '独野服饰专营店', '上海', null);
-INSERT INTO `shop` VALUES ('78', 'karrbleton旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('79', '红杉堡旗舰店', '山东淄博', null);
-INSERT INTO `shop` VALUES ('80', 'ekecel旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('81', '贵公子休闲时尚男装', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('82', 'onttno傲徒旗舰店', '广东东莞', null);
-INSERT INTO `shop` VALUES ('83', 'onttno傲徒旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('84', 'vanzols旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('85', '红杉堡旗舰店', '山东淄博', null);
-INSERT INTO `shop` VALUES ('86', '男霸优衣库', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('87', '独野服饰专营店', '上海', null);
-INSERT INTO `shop` VALUES ('88', '宝爵宾诺旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('89', '胖哥传奇旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('90', '凡转服饰', '广东广州', null);
-INSERT INTO `shop` VALUES ('91', '汉森尼奥旗舰店', '浙江嘉兴', null);
-INSERT INTO `shop` VALUES ('92', '永帅旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('93', '意大鹿旗舰店', '广东中山', null);
-INSERT INTO `shop` VALUES ('94', '宝爵宾诺旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('95', '柠檬青衣', '浙江温州', null);
-INSERT INTO `shop` VALUES ('96', '格莱鸟品牌专柜', '浙江嘉兴', null);
-INSERT INTO `shop` VALUES ('97', '拓凡服饰专营店', '浙江宁波', null);
-INSERT INTO `shop` VALUES ('98', '卡罗华旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('99', 'VA双人汇', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('100', '威克帝国旗舰店', '湖北武汉', null);
-INSERT INTO `shop` VALUES ('101', '潮朝旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('102', 'noxwel旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('103', 'kiss潮界服饰', '广东广州', null);
-INSERT INTO `shop` VALUES ('104', '「良木潮流男装」日系复古韩', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('105', '潮生服饰1988', '广东广州', null);
-INSERT INTO `shop` VALUES ('106', '宾凯服饰专营店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('107', 'lzx服饰旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('108', 'd[s111370233]', '广东广州', null);
-INSERT INTO `shop` VALUES ('109', '神奇布衣', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('110', '霆酷格柏专卖店', '广东广州', null);
-INSERT INTO `shop` VALUES ('111', '简毅旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('112', '堡狮酷旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('113', '男神家大码男装', '上海', null);
-INSERT INTO `shop` VALUES ('114', '方式旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('115', '缤慕左莎专卖店', '广东广州', null);
-INSERT INTO `shop` VALUES ('116', 'summer男装时尚型男会社', '福建泉州', null);
-INSERT INTO `shop` VALUES ('117', '香港专柜男装代购', '香港九龙', null);
-INSERT INTO `shop` VALUES ('118', '麦酷狼族直销店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('119', '莱库旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('120', '密斯特服饰', '广东广州', null);
-INSERT INTO `shop` VALUES ('121', 'vanzols旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('122', '蒙迪蚂蚁服饰旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('123', '棉田服饰旗舰店', '浙江金华', null);
-INSERT INTO `shop` VALUES ('124', '名牌促销店', '广东广州', null);
-INSERT INTO `shop` VALUES ('125', '七原润依专卖店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('126', '麻吉岛旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('127', '请大家支持薄利多销', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('128', '意树旗舰店', '上海', null);
-INSERT INTO `shop` VALUES ('129', 'yezoe英佐旗厦专卖店', '上海', null);
-INSERT INTO `shop` VALUES ('130', 'kissmepeople旗舰店', '广东中山', null);
-INSERT INTO `shop` VALUES ('131', 'busttnd布圣尼旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('132', '名豪正品男装', '山东淄博', null);
-INSERT INTO `shop` VALUES ('133', '戈蓝笛旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('134', '方式旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('135', '菲诺德旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('136', '牛仔潮儿', '广东广州', null);
-INSERT INTO `shop` VALUES ('137', '九号球男装', '广东广州', null);
-INSERT INTO `shop` VALUES ('138', 'lehondies旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('139', '百年祥狐男装店', '福建厦门', null);
-INSERT INTO `shop` VALUES ('140', 'MRCYC原创日系男装 ', '上海', null);
-INSERT INTO `shop` VALUES ('141', '步加图旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('142', '霆酷班佐专卖店', '广东广州', null);
-INSERT INTO `shop` VALUES ('143', '骆驼男装旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('144', '流行坊男装o', '北京', null);
-INSERT INTO `shop` VALUES ('145', 'Give Five', '浙江温州', null);
-INSERT INTO `shop` VALUES ('146', '马登旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('147', '雅士町旗帜店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('148', '卡劲森旗舰店', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('149', '乔奈旗舰店', '浙江宁波', null);
-INSERT INTO `shop` VALUES ('150', '雅玛登英伦风', '浙江温州', null);
-INSERT INTO `shop` VALUES ('151', '马丁男士皮鞋', '上海', null);
-INSERT INTO `shop` VALUES ('152', '拓岸男士皮鞋', '上海', null);
-INSERT INTO `shop` VALUES ('153', 'crown皇冠鞋类官方旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('154', '韩都优鞋店', '上海', null);
-INSERT INTO `shop` VALUES ('155', '乔奈旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('156', '诚信国际鞋业', '北京', null);
-INSERT INTO `shop` VALUES ('157', 'andysworld旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('158', '公羊金品旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('159', '联泰商城', '浙江温州', null);
-INSERT INTO `shop` VALUES ('160', '意大利代购Milano商务皮鞋', '福建厦门', null);
-INSERT INTO `shop` VALUES ('161', '灵兔男鞋专营店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('162', '万鑫商城', '浙江温州', null);
-INSERT INTO `shop` VALUES ('163', '冰冰小空姐代购', '香港香港岛', null);
-INSERT INTO `shop` VALUES ('164', '名爵士旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('165', '沙驰旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('166', '耐宾鞋类旗舰店 ', '浙江温州', null);
-INSERT INTO `shop` VALUES ('167', '穿尚鞋吧男鞋铺', '河北石家庄', null);
-INSERT INTO `shop` VALUES ('168', '香港白玉店鞋业舰旗店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('169', '意大利阿玛尼男鞋皮鞋潮鞋馆', '福建泉州', null);
-INSERT INTO `shop` VALUES ('170', '掏宝掏到宝', '浙江温州', null);
-INSERT INTO `shop` VALUES ('171', '宝商服饰专营店', '河南郑州', null);
-INSERT INTO `shop` VALUES ('172', '男鞋之家315鞋业', '北京', null);
-INSERT INTO `shop` VALUES ('173', '贵族时尚男装城', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('174', '高档男鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('175', '神鞋正品', '广东深圳', null);
-INSERT INTO `shop` VALUES ('176', '爱尚男鞋专购店', '广东深圳', null);
-INSERT INTO `shop` VALUES ('177', '稳步旗舰店', '北京', null);
-INSERT INTO `shop` VALUES ('178', 'tnj旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('179', '哲度旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('180', '欢迎皇家鞋柜', '福建泉州', null);
-INSERT INTO `shop` VALUES ('181', '森足鞋吧', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('182', '狼峰嚎', '浙江温州', null);
-INSERT INTO `shop` VALUES ('183', '缘名巷官旗店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('185', 'pardasaul帕达索旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('186', 'jkjk旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('187', '金莱仕男鞋', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('188', '足上生辉潮鞋店', '山西太原', null);
-INSERT INTO `shop` VALUES ('189', '时尚百分百男鞋店', '上海', null);
-INSERT INTO `shop` VALUES ('190', '豪瑞丨商城', '浙江温州', null);
-INSERT INTO `shop` VALUES ('191', '尊贵品牌舰旗总店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('192', 'AT纯手工男鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('193', '一鞋走四方', '浙江温州', null);
-INSERT INTO `shop` VALUES ('194', 'JQL上海英伦皮鞋总店', '上海', null);
-INSERT INTO `shop` VALUES ('196', '爱格鞋业', '山东聊城', null);
-INSERT INTO `shop` VALUES ('197', '足上生辉潮鞋店', '山西太原', null);
-INSERT INTO `shop` VALUES ('198', '奥斯曼佰莱工厂店', '广东广州', null);
-INSERT INTO `shop` VALUES ('199', '朗亨皮鞋', '山东聊城', null);
-INSERT INTO `shop` VALUES ('200', '周氏鞋行2011', '北京', null);
-INSERT INTO `shop` VALUES ('201', 'd[s109933323]', '浙江温州', null);
-INSERT INTO `shop` VALUES ('202', '真诚男鞋', '北京', null);
-INSERT INTO `shop` VALUES ('203', '路特斯鞋类专营店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('204', '红蜻蜓力弘专卖店', '上海', null);
-INSERT INTO `shop` VALUES ('205', '骆驼男装旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('206', 'Heat爱3男鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('207', '风云男鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('208', 'playboy尚兔专卖店', '福建厦门', null);
-INSERT INTO `shop` VALUES ('209', '柒拓品牌直销店', '山东聊城', null);
-INSERT INTO `shop` VALUES ('210', 'XLK鞋铺', '山东聊城', null);
-INSERT INTO `shop` VALUES ('211', '奔跑吧 兄弟鞋庄', '上海', null);
-INSERT INTO `shop` VALUES ('212', '花花世界寻找公子 ', '浙江温州', null);
-INSERT INTO `shop` VALUES ('213', '潮鞋一角', '浙江温州', null);
-INSERT INTO `shop` VALUES ('214', '雅煊旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('215', 'vandimi范德米旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('216', '真皮品牌鞋厂销店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('218', '都市红孩子旗舰店', '浙江台州', null);
-INSERT INTO `shop` VALUES ('219', '咖咖比熊旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('220', '巴布豆橙叶专卖店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('221', '上淇母婴专营店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('222', '木木兔旗舰店', '杭州', null);
-INSERT INTO `shop` VALUES ('223', '浩特童鞋', '浙江台州', null);
-INSERT INTO `shop` VALUES ('224', '特步官方旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('225', 'CXG潮鞋铺', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('226', '欧韩范儿高端女鞋', '香港九龙', null);
-INSERT INTO `shop` VALUES ('227', '洋洋宝贝童鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('228', '行川鞋行', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('229', '361度童装旗舰店', '福建厦门', null);
-INSERT INTO `shop` VALUES ('230', '洋洋宝贝童鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('231', '香港步步高童鞋折扣店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('232', '七波辉官方旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('233', '小七北鼻 童鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('234', 'didiaonvren旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('235', 'My方少潮牌男装', '浙江温州', null);
-INSERT INTO `shop` VALUES ('236', '久久龙旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('237', '本店今日店庆全场5折', '北京', null);
-INSERT INTO `shop` VALUES ('238', '圣得斯旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('239', '芭蒂兰旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('240', '匡跑鞋业', '浙江温州', null);
-INSERT INTO `shop` VALUES ('241', '马登旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('242', '独角公羊潮鞋店', '山西太原', null);
-INSERT INTO `shop` VALUES ('243', '尚步奇旗舰店', '福建厦门', null);
-INSERT INTO `shop` VALUES ('244', '肆叶草鞋', '福建泉州', null);
-INSERT INTO `shop` VALUES ('245', '正品男鞋购物中心', '浙江温州', null);
-INSERT INTO `shop` VALUES ('246', 'andysworld旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('247', '点点光点男鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('248', '鞋在这儿鞋在这儿', '浙江温州', null);
-INSERT INTO `shop` VALUES ('249', 'ouse讴色', '福建莆田', null);
-INSERT INTO `shop` VALUES ('250', '美洋洋 鞋铺', '福建泉州', null);
-INSERT INTO `shop` VALUES ('251', 'wlgd沃立谷德旗舰店', '上海', null);
-INSERT INTO `shop` VALUES ('252', '娟娟货柜', '湖北武汉', null);
-INSERT INTO `shop` VALUES ('253', '牧邮旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('254', 'PathFinder鞋类品牌店', '广东佛山', null);
-INSERT INTO `shop` VALUES ('255', '上海精品鞋业', '上海', null);
-INSERT INTO `shop` VALUES ('256', '豪川行鞋类专营店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('257', '爱购1号店', '广东广州', null);
-INSERT INTO `shop` VALUES ('258', '柔沙鞋类旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('259', '花花公子杉米直销店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('260', '阿乐迪旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('261', '范哲仕', '福建泉州', null);
-INSERT INTO `shop` VALUES ('262', '雷友旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('263', '狠爱旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('264', '丹丹2号店 金牌', '福建泉州', null);
-INSERT INTO `shop` VALUES ('265', 'sk鞋类旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('266', 'dickies鞋类旗舰店', '上海', null);
-INSERT INTO `shop` VALUES ('267', '福德轩鞋类旗舰店', '河南郑州', null);
-INSERT INTO `shop` VALUES ('268', '库都概念旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('269', '有型鞋族', '浙江温州', null);
-INSERT INTO `shop` VALUES ('270', '小凯鞋铺文艺轻复古男鞋', '浙江宁波', null);
-INSERT INTO `shop` VALUES ('271', '联合创景品牌店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('272', '潮流时尚网络鞋店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('273', '太古原创品牌男鞋', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('274', '米戈邦旗舰店', '广东广州', null);
-INSERT INTO `shop` VALUES ('275', '摩驰旗舰店', '福建厦门', null);
-INSERT INTO `shop` VALUES ('276', 'cppc旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('277', '盛杰运动专营店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('278', '宅族部落旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('279', 'playboy花花公子 上俊店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('280', 'buuqqs旗舰店', '福建莆田', null);
-INSERT INTO `shop` VALUES ('281', 'PLAYBOY正品直销店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('282', 'Mr bok男鞋男装店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('283', '阿源金牌卖家男鞋店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('284', '潮郎仔旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('285', '米戈邦原创男鞋', '广东广州', null);
-INSERT INTO `shop` VALUES ('286', 'NG男鞋工厂1号店', '广东广州', null);
-INSERT INTO `shop` VALUES ('287', '子俊男装', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('288', '法希澳尼旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('289', '佐拉奴旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('290', '亿聚鞋类专营店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('291', '森蒂旗航店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('292', '大唐世家熠致专卖店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('293', '美洲爵士旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('294', 'okko旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('295', 'vismix旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('296', '惟森旗舰店', '福建莆田', null);
-INSERT INTO `shop` VALUES ('298', '杰希尼旗舰店', '福建福州', null);
-INSERT INTO `shop` VALUES ('299', '昊远国际鞋业', '福建泉州', null);
-INSERT INTO `shop` VALUES ('300', 'Lz 潮鞋馆', '陕西西安', null);
-INSERT INTO `shop` VALUES ('301', '奈堡罗鞋城', '陕西西安', null);
-INSERT INTO `shop` VALUES ('302', '潮府男鞋', '福建泉州', null);
-INSERT INTO `shop` VALUES ('303', '立欧娜真皮品牌店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('304', '『伊文高』高端定制', '广东广州', null);
-INSERT INTO `shop` VALUES ('305', '牛奋男鞋社', '广东广州', null);
-INSERT INTO `shop` VALUES ('306', '森列夫旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('307', '履舍鞋铺', '陕西西安', null);
-INSERT INTO `shop` VALUES ('308', '佧特森旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('309', '2018旗舰店', '浙江温州', null);
-INSERT INTO `shop` VALUES ('310', '奇步森旗航店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('311', '三和鞋社', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('312', '时尚男鞋专售', '福建泉州', null);
-INSERT INTO `shop` VALUES ('313', '木林森鞋类旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('314', '古洋城鞋类旗舰店 ', '福建泉州', null);
-INSERT INTO `shop` VALUES ('315', '瑞瑞淘淘精品鞋铺', '福建泉州', null);
-INSERT INTO `shop` VALUES ('316', 'usy旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('317', '大花小花小小花原创定制小码男装店FLOWERZOU', '广东广州', null);
-INSERT INTO `shop` VALUES ('318', '鞋柜驿站', '浙江温州', null);
-INSERT INTO `shop` VALUES ('319', '希路猎人旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('320', '小歪帆布鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('321', '爱酷时尚坊', '江苏徐州', null);
-INSERT INTO `shop` VALUES ('322', '扬天鞋类专营店', '福建福州', null);
-INSERT INTO `shop` VALUES ('323', '非凡鞋族', '浙江温州', null);
-INSERT INTO `shop` VALUES ('324', '瞭望者男鞋', '浙江温州', null);
-INSERT INTO `shop` VALUES ('325', '淘鞋网人本帆布鞋店', '广东广州', null);
-INSERT INTO `shop` VALUES ('326', '乌77 wu77style 欧美韩系 原', '广东广州', null);
-INSERT INTO `shop` VALUES ('327', '信步布鞋店', '山东临沂', null);
-INSERT INTO `shop` VALUES ('328', '德拉玛旗舰店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('329', '爱快运动户外专营店', '福建泉州', null);
-INSERT INTO `shop` VALUES ('330', 'vivo官方旗舰店 ', '广东东莞', null);
-INSERT INTO `shop` VALUES ('394', '蓝易数码专营店', '广东深圳', null);
-INSERT INTO `shop` VALUES ('395', '苏宁易购官方旗舰店 ', '江苏南京', null);
-INSERT INTO `shop` VALUES ('396', '海信电视官方旗舰店 ', '电器城佛山仓', null);
-INSERT INTO `shop` VALUES ('397', '西门子百诚专卖店 ', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('398', '美的冰箱旗舰店 ', '电器城佛山仓', null);
-INSERT INTO `shop` VALUES ('399', '海尔官方旗舰店 ', '山东青岛', null);
-INSERT INTO `shop` VALUES ('400', '多隆数码专营店 ', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('401', '京东数码专营店 ', '北京', null);
-INSERT INTO `shop` VALUES ('402', '戎美 慢时光快时尚', '江苏苏州', null);
-INSERT INTO `shop` VALUES ('403', '星期八全球进口美食汇', '重庆', null);
-INSERT INTO `shop` VALUES ('404', 'zerofront旗舰店', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('405', '宸心宸翼 TB环球母婴店 ', '湖北武汉', null);
-INSERT INTO `shop` VALUES ('406', '大品牌小店面 ', '福建泉州', null);
-INSERT INTO `shop` VALUES ('407', '鸭子不漂亮箱包 ', '上海', null);
-INSERT INTO `shop` VALUES ('408', 'artmi旗舰店 ', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('409', '浪漫之旅中国体验店', '北京', null);
-INSERT INTO `shop` VALUES ('410', '朵道尔旗舰店 ', '广东广州', null);
-INSERT INTO `shop` VALUES ('411', 'snoopy童装旗舰店 ', '上海', null);
-INSERT INTO `shop` VALUES ('412', '巨爵体育 ', '上海', null);
-INSERT INTO `shop` VALUES ('413', '凤舞真皮女鞋 ', '上海', null);
-INSERT INTO `shop` VALUES ('414', '静熙旗舰店 ', '福建莆田', null);
-INSERT INTO `shop` VALUES ('415', '光度旗舰店 ', '福建泉州', null);
-INSERT INTO `shop` VALUES ('416', '松下空调旗舰店', '电器城佛山', null);
-INSERT INTO `shop` VALUES ('417', '格力官方旗舰店 ', '浙江杭州', null);
-INSERT INTO `shop` VALUES ('418', '长虹空调旗舰店 ', '电器城佛山', null);
+INSERT INTO `shops` VALUES ('1', '素缕旗舰店', '山东济南', '3', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('2', 'S家原创设计女装', '四川成都', '3', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('3', '七七之缘', '广东惠州', '3', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('4', '默默家精品女装', '浙江杭州', '3', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('5', '韩舍艳旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('6', '粉红大布娃娃', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('7', '顺淘企业店铺', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('8', '歌慕妮旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('9', '阿姐家', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('10', 'e尚小站旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('11', '黛蜜妃女装旗舰店', '河南郑州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('12', '怡然有衣街拍时尚', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('13', '薇漫蕾旗舰店', '河南郑州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('14', '悦风铃旗舰店', '浙江宁波', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('15', '泌彩流纱旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('16', '井薇家店主实拍欧韩范', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('17', 'TWICELIFE 韩风女装', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('18', '温莎芭莎旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('19', '歌诗娅女装', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('20', 'omont服饰旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('21', '慕兮旗舰店', '广东深圳', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('22', '九美雪狐连锁店', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('23', '悦风铃旗舰店', '浙江宁波', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('24', 'qfour旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('25', '小诗原创设计', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('26', '库恩玛维旗舰店', '江苏连云港', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('27', 'MOKA中韩合营店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('28', 'Ar show 艾日秀', '江苏无锡', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('29', '红相竹旗舰店', '广东东莞', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('30', '诺茵祥服饰总店', '四川成都', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('31', '百变伊伊', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('32', 'Shezshow 熙之秀女装', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('33', '依形于色旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('34', '柚子美衣韩版爆款店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('35', '富多莉服饰专营店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('36', '美人鱼 日韩潮流女装', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('37', '穿花点水旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('38', '依名美旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('39', '女神范私人定制', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('40', 'Jenney珍妮衣橱', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('41', '恰那时花开', '广东揭阳', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('42', '潮流前线购', '香港香港岛', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('43', '香港正品女装名媛店', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('44', '芸寇旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('45', '茵曼自营店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('46', '恋色倾曼服饰旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('47', '丽人庄潮流女装', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('48', '慕娜时尚女装店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('49', '芷蔓服装', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('50', '索耳旗舰店', '河南郑州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('51', '随衣服饰旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('52', '妙楚旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('53', '昕薇旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('54', '骆汐 大厂直供中高端女装', '福建宁德', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('55', '米欧奈旗舰店', '广东东莞', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('56', '卓越非凡衣橱', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('57', '半妆服饰品牌店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('58', '粉红大布娃娃云时尚专卖店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('59', '星尚主流の女装', '吉林延边朝鲜族', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('60', '七月天使JulyStudio', '黑龙江哈尔滨', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('61', '奢娜旗舰店', '广东深圳', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('62', '梦妮原创女装', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('63', '路边滴新娘', '浙江嘉兴', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('64', '夏天家 韩国潮流女装', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('65', 'Shes Story', '浙江嘉兴', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('66', '夏阳美衣多风格快时尚', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('67', 'Zara香港专业代购', '香港香港岛', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('68', '依乐蜜', '浙江嘉兴', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('69', '香港爱美汇', '广东惠州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('70', '韩都衣舍惟真专卖店', '山东济南', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('71', '不定义专柜店', '广东东莞', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('72', '飞絮游丝旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('73', '银色衣馆', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('74', '意树旗舰店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('75', '巴黎格调男装专场', '福州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('76', 'amii铭致专卖店', '浙江宁波', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('77', '独野服饰专营店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('78', 'karrbleton旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('79', '红杉堡旗舰店', '山东淄博', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('80', 'ekecel旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('81', '贵公子休闲时尚男装', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('82', 'onttno傲徒旗舰店', '广东东莞', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('83', 'onttno傲徒旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('84', 'vanzols旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('85', '红杉堡旗舰店', '山东淄博', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('86', '男霸优衣库', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('87', '独野服饰专营店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('88', '宝爵宾诺旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('89', '胖哥传奇旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('90', '凡转服饰', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('91', '汉森尼奥旗舰店', '浙江嘉兴', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('92', '永帅旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('93', '意大鹿旗舰店', '广东中山', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('94', '宝爵宾诺旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('95', '柠檬青衣', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('96', '格莱鸟品牌专柜', '浙江嘉兴', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('97', '拓凡服饰专营店', '浙江宁波', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('98', '卡罗华旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('99', 'VA双人汇', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('100', '威克帝国旗舰店', '湖北武汉', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('101', '潮朝旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('102', 'noxwel旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('103', 'kiss潮界服饰', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('104', '「良木潮流男装」日系复古韩', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('105', '潮生服饰1988', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('106', '宾凯服饰专营店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('107', 'lzx服饰旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('108', 'd[s111370233]', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('109', '神奇布衣', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('110', '霆酷格柏专卖店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('111', '简毅旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('112', '堡狮酷旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('113', '男神家大码男装', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('114', '方式旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('115', '缤慕左莎专卖店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('116', 'summer男装时尚型男会社', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('117', '香港专柜男装代购', '香港九龙', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('118', '麦酷狼族直销店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('119', '莱库旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('120', '密斯特服饰', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('121', 'vanzols旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('122', '蒙迪蚂蚁服饰旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('123', '棉田服饰旗舰店', '浙江金华', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('124', '名牌促销店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('125', '七原润依专卖店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('126', '麻吉岛旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('127', '请大家支持薄利多销', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('128', '意树旗舰店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('129', 'yezoe英佐旗厦专卖店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('130', 'kissmepeople旗舰店', '广东中山', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('131', 'busttnd布圣尼旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('132', '名豪正品男装', '山东淄博', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('133', '戈蓝笛旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('134', '方式旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('135', '菲诺德旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('136', '牛仔潮儿', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('137', '九号球男装', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('138', 'lehondies旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('139', '百年祥狐男装店', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('140', 'MRCYC原创日系男装 ', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('141', '步加图旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('142', '霆酷班佐专卖店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('143', '骆驼男装旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('144', '流行坊男装o', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('145', 'Give Five', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('146', '马登旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('147', '雅士町旗帜店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('148', '卡劲森旗舰店', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('149', '乔奈旗舰店', '浙江宁波', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('150', '雅玛登英伦风', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('151', '马丁男士皮鞋', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('152', '拓岸男士皮鞋', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('153', 'crown皇冠鞋类官方旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('154', '韩都优鞋店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('155', '乔奈旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('156', '诚信国际鞋业', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('157', 'andysworld旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('158', '公羊金品旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('159', '联泰商城', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('160', '意大利代购Milano商务皮鞋', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('161', '灵兔男鞋专营店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('162', '万鑫商城', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('163', '冰冰小空姐代购', '香港香港岛', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('164', '名爵士旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('165', '沙驰旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('166', '耐宾鞋类旗舰店 ', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('167', '穿尚鞋吧男鞋铺', '河北石家庄', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('168', '香港白玉店鞋业舰旗店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('169', '意大利阿玛尼男鞋皮鞋潮鞋馆', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('170', '掏宝掏到宝', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('171', '宝商服饰专营店', '河南郑州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('172', '男鞋之家315鞋业', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('173', '贵族时尚男装城', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('174', '高档男鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('175', '神鞋正品', '广东深圳', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('176', '爱尚男鞋专购店', '广东深圳', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('177', '稳步旗舰店', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('178', 'tnj旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('179', '哲度旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('180', '欢迎皇家鞋柜', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('181', '森足鞋吧', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('182', '狼峰嚎', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('183', '缘名巷官旗店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('185', 'pardasaul帕达索旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('186', 'jkjk旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('187', '金莱仕男鞋', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('188', '足上生辉潮鞋店', '山西太原', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('189', '时尚百分百男鞋店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('190', '豪瑞丨商城', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('191', '尊贵品牌舰旗总店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('192', 'AT纯手工男鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('193', '一鞋走四方', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('194', 'JQL上海英伦皮鞋总店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('196', '爱格鞋业', '山东聊城', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('197', '足上生辉潮鞋店', '山西太原', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('198', '奥斯曼佰莱工厂店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('199', '朗亨皮鞋', '山东聊城', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('200', '周氏鞋行2011', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('201', 'd[s109933323]', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('202', '真诚男鞋', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('203', '路特斯鞋类专营店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('204', '红蜻蜓力弘专卖店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('205', '骆驼男装旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('206', 'Heat爱3男鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('207', '风云男鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('208', 'playboy尚兔专卖店', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('209', '柒拓品牌直销店', '山东聊城', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('210', 'XLK鞋铺', '山东聊城', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('211', '奔跑吧 兄弟鞋庄', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('212', '花花世界寻找公子 ', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('213', '潮鞋一角', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('214', '雅煊旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('215', 'vandimi范德米旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('216', '真皮品牌鞋厂销店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('218', '都市红孩子旗舰店', '浙江台州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('219', '咖咖比熊旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('220', '巴布豆橙叶专卖店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('221', '上淇母婴专营店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('222', '木木兔旗舰店', '杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('223', '浩特童鞋', '浙江台州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('224', '特步官方旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('225', 'CXG潮鞋铺', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('226', '欧韩范儿高端女鞋', '香港九龙', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('227', '洋洋宝贝童鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('228', '行川鞋行', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('229', '361度童装旗舰店', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('230', '洋洋宝贝童鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('231', '香港步步高童鞋折扣店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('232', '七波辉官方旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('233', '小七北鼻 童鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('234', 'didiaonvren旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('235', 'My方少潮牌男装', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('236', '久久龙旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('237', '本店今日店庆全场5折', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('238', '圣得斯旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('239', '芭蒂兰旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('240', '匡跑鞋业', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('241', '马登旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('242', '独角公羊潮鞋店', '山西太原', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('243', '尚步奇旗舰店', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('244', '肆叶草鞋', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('245', '正品男鞋购物中心', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('246', 'andysworld旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('247', '点点光点男鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('248', '鞋在这儿鞋在这儿', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('249', 'ouse讴色', '福建莆田', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('250', '美洋洋 鞋铺', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('251', 'wlgd沃立谷德旗舰店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('252', '娟娟货柜', '湖北武汉', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('253', '牧邮旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('254', 'PathFinder鞋类品牌店', '广东佛山', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('255', '上海精品鞋业', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('256', '豪川行鞋类专营店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('257', '爱购1号店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('258', '柔沙鞋类旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('259', '花花公子杉米直销店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('260', '阿乐迪旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('261', '范哲仕', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('262', '雷友旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('263', '狠爱旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('264', '丹丹2号店 金牌', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('265', 'sk鞋类旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('266', 'dickies鞋类旗舰店', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('267', '福德轩鞋类旗舰店', '河南郑州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('268', '库都概念旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('269', '有型鞋族', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('270', '小凯鞋铺文艺轻复古男鞋', '浙江宁波', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('271', '联合创景品牌店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('272', '潮流时尚网络鞋店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('273', '太古原创品牌男鞋', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('274', '米戈邦旗舰店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('275', '摩驰旗舰店', '福建厦门', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('276', 'cppc旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('277', '盛杰运动专营店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('278', '宅族部落旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('279', 'playboy花花公子 上俊店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('280', 'buuqqs旗舰店', '福建莆田', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('281', 'PLAYBOY正品直销店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('282', 'Mr bok男鞋男装店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('283', '阿源金牌卖家男鞋店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('284', '潮郎仔旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('285', '米戈邦原创男鞋', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('286', 'NG男鞋工厂1号店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('287', '子俊男装', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('288', '法希澳尼旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('289', '佐拉奴旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('290', '亿聚鞋类专营店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('291', '森蒂旗航店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('292', '大唐世家熠致专卖店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('293', '美洲爵士旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('294', 'okko旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('295', 'vismix旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('296', '惟森旗舰店', '福建莆田', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('298', '杰希尼旗舰店', '福建福州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('299', '昊远国际鞋业', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('300', 'Lz 潮鞋馆', '陕西西安', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('301', '奈堡罗鞋城', '陕西西安', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('302', '潮府男鞋', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('303', '立欧娜真皮品牌店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('304', '『伊文高』高端定制', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('305', '牛奋男鞋社', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('306', '森列夫旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('307', '履舍鞋铺', '陕西西安', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('308', '佧特森旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('309', '2018旗舰店', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('310', '奇步森旗航店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('311', '三和鞋社', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('312', '时尚男鞋专售', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('313', '木林森鞋类旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('314', '古洋城鞋类旗舰店 ', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('315', '瑞瑞淘淘精品鞋铺', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('316', 'usy旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('317', '大花小花小小花原创定制小码男装店FLOWERZOU', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('318', '鞋柜驿站', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('319', '希路猎人旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('320', '小歪帆布鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('321', '爱酷时尚坊', '江苏徐州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('322', '扬天鞋类专营店', '福建福州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('323', '非凡鞋族', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('324', '瞭望者男鞋', '浙江温州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('325', '淘鞋网人本帆布鞋店', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('326', '乌77 wu77style 欧美韩系 原', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('327', '信步布鞋店', '山东临沂', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('328', '德拉玛旗舰店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('329', '爱快运动户外专营店', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('330', 'vivo官方旗舰店 ', '广东东莞', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('394', '蓝易数码专营店', '广东深圳', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('395', '苏宁易购官方旗舰店 ', '江苏南京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('396', '海信电视官方旗舰店 ', '电器城佛山仓', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('397', '西门子百诚专卖店 ', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('398', '美的冰箱旗舰店 ', '电器城佛山仓', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('399', '海尔官方旗舰店 ', '山东青岛', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('400', '多隆数码专营店 ', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('401', '京东数码专营店 ', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('402', '戎美 慢时光快时尚', '江苏苏州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('403', '星期八全球进口美食汇', '重庆', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('404', 'zerofront旗舰店', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('405', '宸心宸翼 TB环球母婴店 ', '湖北武汉', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('406', '大品牌小店面 ', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('407', '鸭子不漂亮箱包 ', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('408', 'artmi旗舰店 ', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('409', '浪漫之旅中国体验店', '北京', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('410', '朵道尔旗舰店 ', '广东广州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('411', 'snoopy童装旗舰店 ', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('412', '巨爵体育 ', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('413', '凤舞真皮女鞋 ', '上海', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('414', '静熙旗舰店 ', '福建莆田', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('415', '光度旗舰店 ', '福建泉州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('416', '松下空调旗舰店', '电器城佛山', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('417', '格力官方旗舰店 ', '浙江杭州', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `shops` VALUES ('418', '长虹空调旗舰店 ', '电器城佛山', null, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for tokens
@@ -5020,8 +5082,8 @@ CREATE TABLE `tokens` (
 -- ----------------------------
 -- Records of tokens
 -- ----------------------------
-INSERT INTO `tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJxbWgiLCJ1c2VyX2lkIjoxLCJpYXQiOjE2MDUwNjQ5OTQsImV4cCI6MTYyMDYxNjk5NH0.i-hEZB72kA9luGctEok7qzIA8sQ-JQD70eR9pi-pyQs', '1', 'qmh', '漂亮的杨紫', '2020-11-10 09:32:50', '2020-11-11 03:23:14');
-INSERT INTO `tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJxbWgxIiwidXNlcl9pZCI6MiwiaWF0IjoxNjA1MDYyOTcyLCJleHAiOjE2MjA2MTQ5NzJ9.UI5GNYMlv7QJpivuLVPYR8u-GnvSru1p7rfxoxlLDwI', '2', 'qmh1', '漂亮的超越', '2020-11-10 09:33:53', '2020-11-11 02:49:32');
+INSERT INTO `tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJxbWgiLCJ1c2VyX2lkIjoxLCJpYXQiOjE2MDUyNDU4NjQsImV4cCI6MTYyMDc5Nzg2NH0.cCZDOG8KFa27KnH5LX9zqE8AmJKtmoYj4POjNDtIeZk', '1', 'qmh', '漂亮的杨紫', '2020-11-10 09:32:50', '2020-11-13 05:37:44');
+INSERT INTO `tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJxbWgxIiwidXNlcl9pZCI6MiwiaWF0IjoxNjA1MjM2MjkxLCJleHAiOjE2MjA3ODgyOTF9.gQ4OsbTZFn8EzAKSCLmgN00tXLq3iu8GpjxhQ-iXJaE', '2', 'qmh1', '漂亮的超越', '2020-11-10 09:33:53', '2020-11-13 02:58:12');
 INSERT INTO `tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJxbWg1IiwidXNlcl9pZCI6MTAsImlhdCI6MTYwNTAwMDkxMSwiZXhwIjoxNjA1MDA0NTExfQ.jrDooQCQBz6ozvfHGFhDiYNcq7MhlewXH2-rYROzEN8', '10', 'qmh5', '人很丑', '2020-11-10 09:35:11', '2020-11-10 09:35:11');
 INSERT INTO `tokens` VALUES ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJxbWgzIiwidXNlcl9pZCI6OCwiaWF0IjoxNjA1MDAwOTY0LCJleHAiOjE2MDUwMDQ1NjR9.X7_rFrfYw6D55dJzQ6cAU6hMxClXHqFIz4BaDsKGUAk', '8', 'qmh3', '很丑', '2020-11-10 09:36:04', '2020-11-10 09:36:04');
 
@@ -5071,6 +5133,6 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', 'qmh', '漂亮的杨紫', 'a34462b26a0d9dd8288c278411f75ca2', '123', '2020-11-09 09:22:55', '2020-11-10 06:28:34');
 INSERT INTO `users` VALUES ('2', 'qmh1', '漂亮的超越', 'a34462b26a0d9dd8288c278411f75ca2', '123', '2020-11-10 05:45:24', '2020-11-10 05:45:24');
-INSERT INTO `users` VALUES ('8', 'qmh3', '很丑', 'a34462b26a0d9dd8288c278411f75ca2', '123', '2020-11-10 07:48:43', '2020-11-10 07:48:43');
+INSERT INTO `users` VALUES ('3', 'qmh3', '很丑', 'a34462b26a0d9dd8288c278411f75ca2', '123', '2020-11-10 07:48:43', '2020-11-10 07:48:43');
 INSERT INTO `users` VALUES ('9', 'qmh4', '人很丑', 'a34462b26a0d9dd8288c278411f75ca2', '123', '2020-11-10 07:50:10', '2020-11-10 07:50:10');
 INSERT INTO `users` VALUES ('12', 'qmh6', '人很漂亮', 'a34462b26a0d9dd8288c278411f75ca2', '123', '2020-11-11 02:25:37', '2020-11-11 02:25:37');

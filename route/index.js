@@ -6,6 +6,8 @@ const Cart = require('./models/cart')
 const Token = require('./models/token')//token表，登录时token会更新
 const Flow = require('./models/flow')//产品关注表
 const History = require('./models/History')//浏览记录表
+const Category = require('./models/Category')//产品主题表
+const Shop = require('./models/Shop')//产品主题表
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -39,7 +41,7 @@ module.exports = () => {
     }
     const route = express.Router();
     const getHomeStr = `SELECT product_id,product_name,product_price,product_img_url,product_uprice FROM product`;
-    const getCateNames = `SELECT * FROM category ORDER BY category_id desc`;
+    const getCateNames = `SELECT * FROM categories ORDER BY category_id desc`;
     //get homePage datas
     route.get('/home', (req, res) => {
       // 查询所有用户
@@ -79,8 +81,8 @@ module.exports = () => {
     };
     route.get('/categorygoods', (req, res) => {
         let mId = req.query.mId;
-        const sql = `select * from product,category where product.category_id=category.category_id and category.category_id='${mId}'`;
-        const categoryStr = `select category_name from category where category_id='${mId}'`;
+        const sql = `select * from product,categories where product.category_id=categories.category_id and categories.category_id='${mId}'`;
+        const categoryStr = `select category_name from categories where category_id='${mId}'`;
         getCateGoods(sql,categoryStr,res);
     });
 
@@ -111,7 +113,31 @@ module.exports = () => {
         let produId = req.query.mId;
 
         const imagesStr = `select image_url from product_image where product_id='${produId}'`;
-        const productStr = `select * from product where product_id='${produId}'`;
+        const productStr = `
+        SELECT
+            product_id,
+            product.category_id,
+            shops.shop_id,
+            product_name,
+            product_price,
+            product_img_url,
+            product_uprice,
+            product_detail,
+            categories.category_name,
+            shops.shop_name,
+            shops.shop_address
+        FROM
+            product,
+            categories,
+            shops
+        WHERE
+            product_id=${produId}
+        AND    
+            product.category_id = categories.category_id
+        AND
+            product.shop_id = shops.shop_id
+        `;
+        
         db.query(imagesStr, (err, imgDatas) => {
             if (err) {
                 console.error(err);
@@ -193,7 +219,7 @@ module.exports = () => {
                     cart_id,
                     users.user_id,
                     product.product_id,
-                    shop.shop_id,
+                    shops.shop_id,
                     product_name,
                     product_price,
                     product_uprice,
@@ -205,11 +231,11 @@ module.exports = () => {
                     product,
                     users,
                     goods_carts,
-                    shop
+                    shops
                 WHERE
                     product.product_id = goods_carts.product_id
                 AND users.user_id = goods_carts.user_id
-                AND shop.shop_id = product.shop_id
+                AND shops.shop_id = product.shop_id
                 AND goods_carts.user_id = ${userInfo.user_id}
             `;
             db.query(cartStr, (err, data) => {
@@ -234,10 +260,10 @@ module.exports = () => {
         let hot = req.query.hot;
         let priceUp = req.query.priceUp;
         let priceDown = req.query.priceDown;
-        const keywordStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%'`;
-        const hotStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%' order by product_comment_num desc`;
-        const priceUpStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%' order by product_uprice asc`;
-        const priceDownStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%' order by product_uprice desc`;
+        const keywordStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%'`;
+        const hotStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%' order by product_comment_num desc`;
+        const priceUpStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%' order by product_uprice asc`;
+        const priceDownStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%' order by product_uprice desc`;
         if (keyWord != '') {
             if (hot != '') {
                 getSearchDatas(hotStr, res);
@@ -300,7 +326,6 @@ module.exports = () => {
         })
     });
     route.post('/login', (req, res) => {
-
         let mObj = {};
         for (let obj in req.body) {
             mObj = JSON.parse(obj);
@@ -311,10 +336,10 @@ module.exports = () => {
         db.query(selectUser, (err, data) => {
             if (err) {
                 console.log(err);
-                res.send({ 'msg': '服务器出错', 'status': 0 }).end();
+                res.send({ 'msg': '服务器出错', 'code': 202 }).end();
             } else {
                 if (data.length == 0) {
-                    res.send({ 'msg': '该用户不存在', 'status': -1 }).end();
+                    res.send({ 'msg': '该用户不存在', 'code': 202 }).end();
                 } else {
                     let dataw = data[0];
                     //login sucess
@@ -351,14 +376,14 @@ module.exports = () => {
                                   }).then(function (token) {
                                     //有就直接返回token表里的表里的token
                                     dataw.accesstoken = tokenT//token输
-                                    res.status(200).send(dataw).end();
+                                    res.status(200).send({ 'msg': '登录成功！', 'code': 200,data:dataw }).end();
                                  })
                             }
                         })
 
 
                     } else {
-                        res.send({ 'msg': '密码不正确', 'status': -2 }).end();
+                        res.send({ 'msg': '密码不正确', 'code': 202 }).end();
                     }
                 }
             }
@@ -518,7 +543,7 @@ module.exports = () => {
                     cart_id,
                     users.user_id,
                     product.product_id,
-                    shop.shop_id,
+                    shops.shop_id,
                     product_name,
                     product_price,
                     product_uprice,
@@ -530,11 +555,11 @@ module.exports = () => {
                     product,
                     users,
                     goods_carts,
-                    shop
+                    shops
                 WHERE
                     product.product_id = goods_carts.product_id
                 AND users.user_id = goods_carts.user_id
-                AND shop.shop_id = product.shop_id
+                AND shops.shop_id = product.shop_id
                 AND goods_carts.user_id = ${userInfo.user_id}
             `;
             db.query(cartStr, (err, data) => {
@@ -656,8 +681,356 @@ module.exports = () => {
         });
         }).catch(err=>{
             res.status(200).send({code:200,msg:'用户未登录！',flowNum:0}).end();
+            
         })
 
     });
+
+
+    // 后台管理
+    route.post('/proManage', (req, res) => {
+        let flowProObj = {}
+        for (let obj in req.body) {
+            flowProObj = JSON.parse(obj)
+        }
+        let categorySQL = flowProObj.cateId != '' ? `products.category_id = ${flowProObj.cateId}`:`1=1`
+        // 查询所有产品
+        const proManageSQL = `
+            SELECT
+                product_id,
+                product.category_id,
+                shops.shop_id,
+                product_name,
+                product_price,
+                product_img_url,
+                product_uprice,
+                product_detail,
+                categories.category_name,
+                shops.shop_name,
+                shops.shop_address
+            FROM
+                product,
+                categories,
+                shops
+            WHERE
+                ${categorySQL}
+            AND
+               product.category_id = categories.category_id
+            AND
+                product.shop_id = shops.shop_id
+            limit ${(flowProObj.pageNum-1)*flowProObj.pageSize},${flowProObj.pageSize}
+        `;
+        let proNumSQL = 'select COUNT(*) from product'
+        getProFun(proManageSQL,proNumSQL, res);
+    });
+    function getProFun(proManageSQL,proNumSQL, res) {
+        db.query(proManageSQL, (err, data) => {
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                db.query(proNumSQL, (err1, data1) => {
+                    //产品数量
+                    if (data.length == 0) {
+                        res.status(200).send({code:200,msg:'查询成功！',data:[],proNum:data1[0]['COUNT(*)']}).end();
+                    } else {
+                        res.status(200).send({code:200,msg:'查询成功！',data,proNum:data1[0]['COUNT(*)']}).end();
+                    }
+                })
+
+            }
+        });
+    }
+    //产品主题列表
+    route.get('/categoryList', (req, res) => {
+
+        // 获取前端请求头发送过来的accesstoken
+        getToken(req.headers.accesstoken).then(userInfo=>{
+            Category.findAll().then(categories=>{
+                res.status(200).send({code:200,msg:'查询成功！',data:categories}).end();
+            })
+        }).catch(err=>{
+            res.status(200).send({code:200,msg:'用户未登录！',data:[]}).end();
+        })
+
+    });
+    //产品主题列表
+    route.post('/shoplist', (req, res) => {
+        let shopProObj = {}
+        for (let obj in req.body) {
+            shopProObj = JSON.parse(obj)
+        }
+        const shopListSQL = `
+        SELECT
+            shop_id,
+            shop_name,
+            shop_address,
+            categories.category_name
+        FROM
+            shops 
+        LEFT JOIN categories ON shops.category_id = categories.category_id 
+        limit ${(shopProObj.pageNum-1)*shopProObj.pageSize},${shopProObj.pageSize}
+        `;
+        // console.log("shopListSQL:",shopListSQL,shopProObj)
+        let proNumSQL = 'select COUNT(*) from shops'
+        db.query(shopListSQL, (err, data) => {
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                db.query(proNumSQL, (err1, data1) => {
+                    if (data.length == 0) {
+                        res.status(200).send({code:200,msg:'查询成功！',shopNum:0,data:[],shopNum:data1[0]['COUNT(*)']}).end();
+                    } else {
+                        res.status(200).send({code:200,msg:'查询成功！',shopNum:data.length,data,shopNum:data1[0]['COUNT(*)']}).end();
+                    }
+                })
+            }
+        });
+    });
+    //订单管理列表
+    route.post('/orderlist', (req, res) => {
+        const flowStr = `
+        SELECT
+            shop_id,
+            shop_name,
+            shop_address,
+            categories.category_name
+        FROM
+            shops 
+        LEFT JOIN categories ON shops.category_id = categories.category_id limit 0,10
+        `;
+        db.query(flowStr, (err, data) => {
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                if (data.length == 0) {
+                    res.status(200).send({code:200,msg:'查询成功！',shopNum:0,data:[]}).end();
+                } else {
+                    res.status(200).send({code:200,msg:'查询成功！',shopNum:data.length,data}).end();
+                }
+            }
+        });
+    });
+    //用户管理列表
+    route.post('/userList', (req, res) => {
+        let userProObj = {}
+        for (let obj in req.body) {
+            userProObj = JSON.parse(obj)
+        }
+        const userSQL = `
+        SELECT
+            user_id,
+            user_name,
+            user_namesub,
+            user_number
+        FROM
+            users
+        limit ${(userProObj.pageNum-1)*userProObj.pageSize},${userProObj.pageSize}
+        `;
+        let userNumSQL = 'select COUNT(*) from users'
+        db.query(userSQL, (err, data) => {
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                db.query(userNumSQL, (err1, data1) => {
+                    if (data.length == 0) {
+                        res.status(200).send({code:200,msg:'查询成功！',data:[],userNum:data1[0]['COUNT(*)']}).end();
+                    } else {
+                        res.status(200).send({code:200,msg:'查询成功！',data,userNum:data1[0]['COUNT(*)']}).end();
+                    }
+                })
+            }
+        });
+    });
+    //用户管理列表
+    route.post('/userDetails', (req, res) => {
+        let userProObj = {}
+        for (let obj in req.body) {
+            userProObj = JSON.parse(obj)
+        }
+        let userId = userProObj.userId
+        const userSQL = `
+        SELECT
+            user_id,
+            user_name,
+            user_namesub,
+            user_number
+        FROM
+            users
+        where users.user_id = ${userId}
+        `;
+
+        // console.log("用户详情：",userSQL,addressSQL)
+        db.query(userSQL, (err, data) => {
+            if (err) {
+                res.status(500).send('database err').end();
+            } else {
+                if (data.length == 0) {
+                   
+                    res.status(200).send({code:200,msg:'查询失改！'}).end();
+                } else {
+                    //用户订单查询
+                    orderSQL(userId).then(orderList=>{
+                        //浏览过产品与次数
+                        historySQL(userId).then(historylist=>{
+                            //用户关注产品
+                            flowSQL(userId).then(flowlist=>{
+                                //购物车
+                                cartSQL(userId).then(cartlist=>{
+                                    //用户地址
+                                    addressSQL(userId).then(addlist=>{
+                                        res.status(200).send({code:200,msg:'查询成功！',data:data[0],addlist,cartlist,flowlist,historylist,orderList}).end();
+                                    }).catch(err1=>{
+                                        res.status(200).send({code:200,msg:'查询成功！',data:data[0],addlist:[],cartlist,flowlist,historylist,orderList}).end();
+                                    })
+                                })
+                            })
+                        })
+                    })
+                    
+                }
+            }
+        });
+    });
+    //用户地址
+    function addressSQL(userId){
+        const addressSQL = `
+        SELECT
+            address_id,
+            addressinfo,
+            user_phone,
+            addressarea,
+            sname
+        FROM
+            address
+        where address.user_id = ${userId}
+        `;
+        return new Promise(function (resolve, reject) {
+            db.query(addressSQL, (err, data) => {
+                if (err) {
+                    reject([])
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    }
+    //用户购物车
+    function cartSQL(userId){
+        const cartSQL = `
+        SELECT
+            goods_carts.cart_id,
+            goods_carts.product_id,
+            goods_carts.goods_num,
+            product.product_name,
+            product.product_img_url
+        FROM
+            goods_carts,
+            product
+        WHERE
+            goods_carts.user_id = ${userId}
+        AND goods_carts.product_id = product.product_id
+        `;
+        return new Promise(function (resolve, reject) {
+            db.query(cartSQL, (err, data) => {
+                if (err) {
+                    reject([])
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    }
+    //用户关注产品
+    function flowSQL(userId){
+        const flowSQL = `
+        SELECT
+            flows.user_id,
+            flows.product_id,
+            product.product_name,
+            product.product_img_url
+        FROM
+            flows,
+            product
+        WHERE
+            flows.user_id = ${userId}
+        AND flows.product_id = product.product_id
+        `;
+        return new Promise(function (resolve, reject) {
+            db.query(flowSQL, (err, data) => {
+                if (err) {
+                    reject([])
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    }
+    //用户浏览过产品
+    function historySQL(userId){
+        const historySQL = `
+        SELECT
+            histories.user_id,
+            histories.product_id,
+            histories.time,
+            product.product_name,
+            product.product_img_url
+        FROM
+            histories,
+            product
+        WHERE
+            histories.user_id = ${userId}
+        AND histories.product_id = product.product_id
+        ORDER BY updatedAt DESC
+        `;
+        return new Promise(function (resolve, reject) {
+            db.query(historySQL, (err, data) => {
+                if (err) {
+                    reject([])
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+}
+    //用户浏览过产品
+    function orderSQL(userId){
+        const orderSQL = `
+        SELECT
+            orders.order_id,
+            orders.user_id,
+            orders.product_id,
+            orders.price,
+            orders.ocount,
+            orders.total_price,
+            orders.orderno,
+            orders.address_id,
+            product.product_name,
+            product.product_img_url,
+            address.addressinfo,
+            address.addressarea
+        FROM
+            orders,
+            product,
+            address
+        WHERE
+            orders.user_id = ${userId}
+        AND orders.product_id = product.product_id
+        AND address.address_id = orders.address_id
+        ORDER BY updatedAt DESC
+        `;
+        return new Promise(function (resolve, reject) {
+            db.query(orderSQL, (err, data) => {
+                if (err) {
+                    reject([])
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    }
+
+
+
+
     return route;
 }
