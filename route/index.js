@@ -7,7 +7,8 @@ const Token = require('./models/token')//token表，登录时token会更新
 const Flow = require('./models/flow')//产品关注表
 const History = require('./models/History')//浏览记录表
 const Category = require('./models/Category')//产品主题表
-const Shop = require('./models/Shop')//产品主题表
+const Shop = require('./models/Shop')//店铺表
+const Address = require('./models/Address')//用户地址表
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -29,7 +30,6 @@ module.exports = () => {
     function getToken(token){
         return new Promise(function(resolve, reject) {
             jwt.verify(token, PRIVATE_KEY, (err, decoded)=>{ // decoded:指的是tokneid解码后用户信息
-                // console.log("token用户:",err,decoded)
                 if (err) {   //如果tokenid过期则会执行err的代码块
                     reject(err) 
                 } else {
@@ -68,7 +68,6 @@ module.exports = () => {
     function getCateNamesDatas(getCateNames, res) {
         db.query(getCateNames, (err, data) => {
             if (err) {
-                console.log(err);
                 res.status(500).send('database err').end();
             } else {
                 if (data.length == 0) {
@@ -89,7 +88,6 @@ module.exports = () => {
     function getCateGoods(sql,categoryStr, res) {
         db.query(sql, (err, data) => {
             if (err) {
-                console.log(err);
                 res.status(500).send('database err').end();
             } else {
                 db.query(categoryStr, (err1, data1) => {
@@ -181,7 +179,6 @@ module.exports = () => {
             let editHistoryObj
             Historys.forEach(ielem=>{
                 let historyObj = ielem.dataValues
-                // console.log("historyObj:",historyObj,userId,productId)
                 if(historyObj.user_id == userId && historyObj.product_id == productId){
                     addTF = false//有关注
                     editHistoryObj = historyObj
@@ -194,7 +191,6 @@ module.exports = () => {
                     product_id:productId,
                     time:1
                 }).then(histories=>{
-                    // console.log("histories:",histories)
                 })
             }else{
                 //浏览过就表里次数time+1
@@ -283,7 +279,6 @@ module.exports = () => {
     function getSearchDatas(keywordStr, res) {
         db.query(keywordStr, (err, data) => {
             if (err) {
-                console.log(err);
                 res.status(500).send('database err').end();
             } else {
                 if (data.length == 0) {
@@ -308,7 +303,6 @@ module.exports = () => {
         // 查询所有用户
         User.findAll().then(res1=>{
             res1.forEach(ielem=>{
-                // console.log("ielem",ielem.dataValues,mObj.regName)
                 if(ielem.dataValues.user_name == mObj.regName){
                     addTF = false//有登录名重新
                 }
@@ -335,7 +329,6 @@ module.exports = () => {
         const selectUser = `SELECT * FROM users where user_name='${username}'`;
         db.query(selectUser, (err, data) => {
             if (err) {
-                console.log(err);
                 res.send({ 'msg': '服务器出错', 'code': 202 }).end();
             } else {
                 if (data.length == 0) {
@@ -350,11 +343,12 @@ module.exports = () => {
                         dataw.status = 200;
                         // 查询所有token有没有重复，没有就新建true，有就直接返回false
                         let addTF = true;
+                        let tokenNew
                         Token.findAll().then(Tokens=>{
                             Tokens.forEach(ielem=>{
                                 if(dataw.user_id === ielem.user_id){
                                     addTF = false
-                                    token = ielem.token
+                                    tokenNew = ielem.token
                                 }
                             })
                             let tokenT = jwt.sign({ user_name:dataw.user_name,user_id:dataw.user_id },PRIVATE_KEY,{expiresIn:JWT_EXPIRED})
@@ -364,7 +358,7 @@ module.exports = () => {
                                 dataw.accesstoken = tokenT//token输
     
                                 //没有就新建，有的就返回
-                                Token.create({token,user_name:dataw.user_name,user_id:dataw.user_id,user_namesub:dataw.user_namesub}).then(function (token) {
+                                Token.create({token:tokenT,user_name:dataw.user_name,user_id:dataw.user_id,user_namesub:dataw.user_namesub}).then(function (token1) {
                                     res.status(200).send(dataw).end();
                                  })
                                 
@@ -395,7 +389,6 @@ module.exports = () => {
         const getU = `SELECT user_id,user_name,user_number,user_namesub FROM users where user_id='${uId}'`;
         db.query(getU, (err, data) => {
             if (err) {
-                console.log(err);
                 res.status(500).send('database err').end();
             } else {
                 if (data.length == 0) {
@@ -693,7 +686,7 @@ module.exports = () => {
         for (let obj in req.body) {
             flowProObj = JSON.parse(obj)
         }
-        let categorySQL = flowProObj.cateId != '' ? `products.category_id = ${flowProObj.cateId}`:`1=1`
+        let categorySQL = flowProObj.cateId != '' ? `product.category_id = ${flowProObj.cateId}`:`1=1`
         // 查询所有产品
         const proManageSQL = `
             SELECT
@@ -720,7 +713,7 @@ module.exports = () => {
                 product.shop_id = shops.shop_id
             limit ${(flowProObj.pageNum-1)*flowProObj.pageSize},${flowProObj.pageSize}
         `;
-        let proNumSQL = 'select COUNT(*) from product'
+        let proNumSQL = `select COUNT(*) from product WHERE ${categorySQL}`
         getProFun(proManageSQL,proNumSQL, res);
     });
     function getProFun(proManageSQL,proNumSQL, res) {
@@ -770,7 +763,6 @@ module.exports = () => {
         LEFT JOIN categories ON shops.category_id = categories.category_id 
         limit ${(shopProObj.pageNum-1)*shopProObj.pageSize},${shopProObj.pageSize}
         `;
-        // console.log("shopListSQL:",shopListSQL,shopProObj)
         let proNumSQL = 'select COUNT(*) from shops'
         db.query(shopListSQL, (err, data) => {
             if (err) {
@@ -787,26 +779,48 @@ module.exports = () => {
         });
     });
     //订单管理列表
-    route.post('/orderlist', (req, res) => {
-        const flowStr = `
+    route.post('/orderList', (req, res) => {
+        let userProObj = {}
+        for (let obj in req.body) {
+            userProObj = JSON.parse(obj)
+        }
+        const orderSQL = `
         SELECT
-            shop_id,
-            shop_name,
-            shop_address,
-            categories.category_name
+            orders.order_id,
+            orders.user_id,
+            orders.product_id,
+            orders.price,
+            orders.ocount,
+            orders.total_price,
+            orders.orderno,
+            orders.address_id,
+            product.product_name,
+            product.product_img_url,
+            addresses.addressinfo,
+            addresses.addressarea,
+            users.user_namesub
         FROM
-            shops 
-        LEFT JOIN categories ON shops.category_id = categories.category_id limit 0,10
+            orders,
+            product,
+            addresses,
+            users
+        WHERE orders.product_id = product.product_id
+        AND addresses.address_id = orders.address_id
+        AND users.user_id = orders.user_id
+        ORDER BY orders.updatedAt DESC
         `;
-        db.query(flowStr, (err, data) => {
+        let orderNumSQL = 'select COUNT(*) from orders'
+        db.query(orderSQL, (err, data) => {
             if (err) {
                 res.status(500).send('database err').end();
             } else {
-                if (data.length == 0) {
-                    res.status(200).send({code:200,msg:'查询成功！',shopNum:0,data:[]}).end();
-                } else {
-                    res.status(200).send({code:200,msg:'查询成功！',shopNum:data.length,data}).end();
-                }
+                db.query(orderNumSQL, (err1, data1) => {
+                    if (data.length == 0) {
+                        res.status(200).send({code:200,msg:'查询成功！',data:[],orderNum:data1[0]['COUNT(*)']}).end();
+                    } else {
+                        res.status(200).send({code:200,msg:'查询成功！',data,orderNum:data1[0]['COUNT(*)']}).end();
+                    }
+                })
             }
         });
     });
@@ -858,8 +872,6 @@ module.exports = () => {
             users
         where users.user_id = ${userId}
         `;
-
-        // console.log("用户详情：",userSQL,addressSQL)
         db.query(userSQL, (err, data) => {
             if (err) {
                 res.status(500).send('database err').end();
@@ -868,14 +880,19 @@ module.exports = () => {
                    
                     res.status(200).send({code:200,msg:'查询失改！'}).end();
                 } else {
+                    console.log("aaa:",userId,err,data,userSQL)
                     //用户订单查询
                     orderSQL(userId).then(orderList=>{
+                        console.log("orderList:",orderList)
                         //浏览过产品与次数
                         historySQL(userId).then(historylist=>{
+                            console.log("historylist:",historylist)
                             //用户关注产品
                             flowSQL(userId).then(flowlist=>{
+                                console.log("flowlist:",flowlist)
                                 //购物车
                                 cartSQL(userId).then(cartlist=>{
+                                    console.log("cartlist:",cartlist)
                                     //用户地址
                                     addressSQL(userId).then(addlist=>{
                                         res.status(200).send({code:200,msg:'查询成功！',data:data[0],addlist,cartlist,flowlist,historylist,orderList}).end();
@@ -899,10 +916,11 @@ module.exports = () => {
             addressinfo,
             user_phone,
             addressarea,
+            isdefault,
             sname
         FROM
-            address
-        where address.user_id = ${userId}
+            addresses
+        where addresses.user_id = ${userId}
         `;
         return new Promise(function (resolve, reject) {
             db.query(addressSQL, (err, data) => {
@@ -981,6 +999,7 @@ module.exports = () => {
             histories.user_id = ${userId}
         AND histories.product_id = product.product_id
         ORDER BY updatedAt DESC
+        limit 0,6
         `;
         return new Promise(function (resolve, reject) {
             db.query(historySQL, (err, data) => {
@@ -1006,20 +1025,21 @@ module.exports = () => {
             orders.address_id,
             product.product_name,
             product.product_img_url,
-            address.addressinfo,
-            address.addressarea
+            addresses.addressinfo,
+            addresses.addressarea
         FROM
             orders,
             product,
-            address
+            addresses
         WHERE
             orders.user_id = ${userId}
         AND orders.product_id = product.product_id
-        AND address.address_id = orders.address_id
-        ORDER BY updatedAt DESC
+        AND addresses.address_id = orders.address_id
+        ORDER BY orders.updatedAt DESC
         `;
         return new Promise(function (resolve, reject) {
             db.query(orderSQL, (err, data) => {
+                console.log("bbb:",err,data)
                 if (err) {
                     reject([])
                 } else {
@@ -1028,9 +1048,97 @@ module.exports = () => {
             })
         })
     }
+    //用户删除关注产品
+    route.post('/delCart', (req, res) => {
+        let delCartObj = {}
+        for (let obj in req.body) {
+            delCartObj = JSON.parse(obj)
+        }
+        //有关注，就取消关注，删除flow关注表记录
+        Cart.destroy({
+            where:{
+                cart_id:delCartObj.cart_id
+            }
+        }).then(cart=>{
+            res.status(200).send({code:200,msg:'删除购物车产品成功'}).end();
+        })
+    });
 
+    //用户删除关注产品
+    route.post('/delFlow', (req, res) => {
+        let delFlowObj = {}
+        for (let obj in req.body) {
+            delFlowObj = JSON.parse(obj)
+        }
+        //有关注，就取消关注，删除flow关注表记录
+        Flow.destroy({
+            where:{
+                user_id:delFlowObj.user_id,
+                product_id:delFlowObj.product_id
+            }
+        }).then(flow=>{
+            res.status(200).send({code:200,msg:'取消关注产品成功'}).end();
+        })
+    });
+    //用户添加地址
+    route.post('/addAddr', (req, res) => {
+        let addressObj = {}
+        for (let obj in req.body) {
+            addressObj = JSON.parse(obj)
+        }
+        //无关注，添加flow关注表记录
+        Address.create({
+            user_id:addressObj.user_id,
+            addressinfo:addressObj.addressinfo,
+            isdefault:addressObj.isdefault,
+            user_phone:addressObj.user_phone,
+            addressarea:addressObj.addressarea,
+            sname:addressObj.sname,
+        }).then((address)=> {
+            res.status(200).send({code:200,msg:'地址添加成功！'}).end();
+        })
+    });
+    //用户删除地址
+    route.post('/delAddr', (req, res) => {
+        let addressObj = {}
+        for (let obj in req.body) {
+            addressObj = JSON.parse(obj)
+        }
+        //无关注，添加flow关注表记录
+        Address.destroy({
+            where:{
+                address_id:addressObj.address_id
+            }
+        }).then(flow=>{
+            res.status(200).send({code:200,msg:'删除地址成功！'}).end();
+        })
+    });
+    //用户编辑地址
+    route.post('/editAddr', (req, res) => {
+        let addressObj = {}
+        for (let obj in req.body) {
+            addressObj = JSON.parse(obj)
+        }
+        Address.update({
+            user_id:addressObj.user_id,
+            addressinfo:addressObj.addressinfo,
+            isdefault:addressObj.isdefault,
+            user_phone:addressObj.user_phone,
+            addressarea:addressObj.addressarea,
+            sname:addressObj.sname,
+        }, {
+            where: {
+                address_id: addressObj.address_id
+            }
+          }).then(function (token) {
+            res.status(200).send({ 'msg': '地址修改成功！', 'code': 200}).end();
+         })
+    });
+    /* 上传 */
+    route.post('/file/uploading',(req, res, next)=>{
+        console.log("req:",req,res,next)
 
-
+    })
 
     return route;
 }
