@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+var multer = require('multer');
 const common = require('../libs/common');
 const User = require('./models/user')
 const Cart = require('./models/cart')
@@ -9,6 +10,7 @@ const History = require('./models/History')//浏览记录表
 const Category = require('./models/Category')//产品主题表
 const Shop = require('./models/Shop')//店铺表
 const Address = require('./models/Address')//用户地址表
+const Product = require('./models/Product')//产品表
 
 const db = mysql.createPool({
     host: 'localhost',
@@ -40,7 +42,7 @@ module.exports = () => {
         })
     }
     const route = express.Router();
-    const getHomeStr = `SELECT product_id,product_name,product_price,product_img_url,product_uprice FROM product`;
+    const getHomeStr = `SELECT product_id,product_name,product_price,product_img_url,product_uprice FROM products`;
     const getCateNames = `SELECT * FROM categories ORDER BY category_id desc`;
     //get homePage datas
     route.get('/home', (req, res) => {
@@ -80,7 +82,7 @@ module.exports = () => {
     };
     route.get('/categorygoods', (req, res) => {
         let mId = req.query.mId;
-        const sql = `select * from product,categories where product.category_id=categories.category_id and categories.category_id='${mId}'`;
+        const sql = `select * from products,categories where products.category_id=categories.category_id and categories.category_id='${mId}'`;
         const categoryStr = `select category_name from categories where category_id='${mId}'`;
         getCateGoods(sql,categoryStr,res);
     });
@@ -114,7 +116,7 @@ module.exports = () => {
         const productStr = `
         SELECT
             product_id,
-            product.category_id,
+            products.category_id,
             shops.shop_id,
             product_name,
             product_price,
@@ -125,15 +127,15 @@ module.exports = () => {
             shops.shop_name,
             shops.shop_address
         FROM
-            product,
+            products,
             categories,
             shops
         WHERE
             product_id=${produId}
         AND    
-            product.category_id = categories.category_id
+            products.category_id = categories.category_id
         AND
-            product.shop_id = shops.shop_id
+            products.shop_id = shops.shop_id
         `;
         
         db.query(imagesStr, (err, imgDatas) => {
@@ -214,7 +216,7 @@ module.exports = () => {
                 SELECT
                     cart_id,
                     users.user_id,
-                    product.product_id,
+                    products.product_id,
                     shops.shop_id,
                     product_name,
                     product_price,
@@ -224,14 +226,14 @@ module.exports = () => {
                     product_num,
                     shop_name
                 FROM
-                    product,
+                    products,
                     users,
                     goods_carts,
                     shops
                 WHERE
-                    product.product_id = goods_carts.product_id
+                    products.product_id = goods_carts.product_id
                 AND users.user_id = goods_carts.user_id
-                AND shops.shop_id = product.shop_id
+                AND shops.shop_id = products.shop_id
                 AND goods_carts.user_id = ${userInfo.user_id}
             `;
             db.query(cartStr, (err, data) => {
@@ -256,10 +258,10 @@ module.exports = () => {
         let hot = req.query.hot;
         let priceUp = req.query.priceUp;
         let priceDown = req.query.priceDown;
-        const keywordStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%'`;
-        const hotStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%' order by product_comment_num desc`;
-        const priceUpStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%' order by product_uprice asc`;
-        const priceDownStr = `select  *  from product,shops where product.shop_id=shops.shop_id and product.product_name like '%${keyWord}%' order by product_uprice desc`;
+        const keywordStr = `select  *  from products,shops where products.shop_id=shops.shop_id and products.product_name like '%${keyWord}%'`;
+        const hotStr = `select  *  from products,shops where products.shop_id=shops.shop_id and products.product_name like '%${keyWord}%' order by product_comment_num desc`;
+        const priceUpStr = `select  *  from products,shops where products.shop_id=shops.shop_id and products.product_name like '%${keyWord}%' order by product_uprice asc`;
+        const priceDownStr = `select  *  from products,shops where products.shop_id=shops.shop_id and products.product_name like '%${keyWord}%' order by product_uprice desc`;
         if (keyWord != '') {
             if (hot != '') {
                 getSearchDatas(hotStr, res);
@@ -535,7 +537,7 @@ module.exports = () => {
                 SELECT
                     cart_id,
                     users.user_id,
-                    product.product_id,
+                    products.product_id,
                     shops.shop_id,
                     product_name,
                     product_price,
@@ -545,14 +547,14 @@ module.exports = () => {
                     product_num,
                     shop_name
                 FROM
-                    product,
+                    products,
                     users,
                     goods_carts,
                     shops
                 WHERE
-                    product.product_id = goods_carts.product_id
+                    products.product_id = goods_carts.product_id
                 AND users.user_id = goods_carts.user_id
-                AND shops.shop_id = product.shop_id
+                AND shops.shop_id = products.shop_id
                 AND goods_carts.user_id = ${userInfo.user_id}
             `;
             db.query(cartStr, (err, data) => {
@@ -592,18 +594,18 @@ module.exports = () => {
             const flowStr = `
             SELECT
                 flows.user_id,
-                product.product_id,
+                products.product_id,
                 product_name,
                 product_price,
                 product_uprice,
                 product_img_url,
                 product_num
             FROM
-                product,
+                products,
                 flows
             WHERE
                 flows.user_id = ${userInfo.user_id}
-            AND flows.product_id = product.product_id
+            AND flows.product_id = products.product_id
 
         `;
         db.query(flowStr, (err, data) => {
@@ -645,7 +647,7 @@ module.exports = () => {
             const flowStr = `
             SELECT
                 histories.user_id,
-                product.product_id,
+                products.product_id,
                 product_name,
                 product_price,
                 product_uprice,
@@ -654,11 +656,11 @@ module.exports = () => {
                 histories.time,
                 histories.updatedAt
             FROM
-                product,
+                products,
                 histories
             WHERE
             histories.user_id = ${userInfo.user_id}
-            AND histories.product_id = product.product_id
+            AND histories.product_id = products.product_id
             ORDER BY updatedAt DESC
         `;
         db.query(flowStr, (err, data) => {
@@ -686,34 +688,36 @@ module.exports = () => {
         for (let obj in req.body) {
             flowProObj = JSON.parse(obj)
         }
-        let categorySQL = flowProObj.cateId != '' ? `product.category_id = ${flowProObj.cateId}`:`1=1`
+        let categorySQL = flowProObj.cateId != '' ? `products.category_id = ${flowProObj.cateId}`:`1=1`
         // 查询所有产品
         const proManageSQL = `
             SELECT
-                product_id,
-                product.category_id,
+                products.product_id,
+                products.category_id,
                 shops.shop_id,
-                product_name,
-                product_price,
-                product_img_url,
-                product_uprice,
-                product_detail,
+                products.product_name,
+                products.product_price,
+                products.product_img_url,
+                products.product_uprice,
+                products.product_detail,
                 categories.category_name,
                 shops.shop_name,
                 shops.shop_address
             FROM
-                product,
+                products,
                 categories,
                 shops
             WHERE
                 ${categorySQL}
             AND
-               product.category_id = categories.category_id
+               products.category_id = categories.category_id
             AND
-                product.shop_id = shops.shop_id
+                products.shop_id = shops.shop_id
+            ORDER BY products.updatedAt desc
             limit ${(flowProObj.pageNum-1)*flowProObj.pageSize},${flowProObj.pageSize}
+            
         `;
-        let proNumSQL = `select COUNT(*) from product WHERE ${categorySQL}`
+        let proNumSQL = `select COUNT(*) from products WHERE ${categorySQL}`
         getProFun(proManageSQL,proNumSQL, res);
     });
     function getProFun(proManageSQL,proNumSQL, res) {
@@ -794,17 +798,17 @@ module.exports = () => {
             orders.total_price,
             orders.orderno,
             orders.address_id,
-            product.product_name,
-            product.product_img_url,
+            products.product_name,
+            products.product_img_url,
             addresses.addressinfo,
             addresses.addressarea,
             users.user_namesub
         FROM
             orders,
-            product,
+            products,
             addresses,
             users
-        WHERE orders.product_id = product.product_id
+        WHERE orders.product_id = products.product_id
         AND addresses.address_id = orders.address_id
         AND users.user_id = orders.user_id
         ORDER BY orders.updatedAt DESC
@@ -880,19 +884,14 @@ module.exports = () => {
                    
                     res.status(200).send({code:200,msg:'查询失改！'}).end();
                 } else {
-                    console.log("aaa:",userId,err,data,userSQL)
                     //用户订单查询
                     orderSQL(userId).then(orderList=>{
-                        console.log("orderList:",orderList)
                         //浏览过产品与次数
                         historySQL(userId).then(historylist=>{
-                            console.log("historylist:",historylist)
                             //用户关注产品
                             flowSQL(userId).then(flowlist=>{
-                                console.log("flowlist:",flowlist)
                                 //购物车
                                 cartSQL(userId).then(cartlist=>{
-                                    console.log("cartlist:",cartlist)
                                     //用户地址
                                     addressSQL(userId).then(addlist=>{
                                         res.status(200).send({code:200,msg:'查询成功！',data:data[0],addlist,cartlist,flowlist,historylist,orderList}).end();
@@ -939,14 +938,14 @@ module.exports = () => {
             goods_carts.cart_id,
             goods_carts.product_id,
             goods_carts.goods_num,
-            product.product_name,
-            product.product_img_url
+            products.product_name,
+            products.product_img_url
         FROM
             goods_carts,
-            product
+            products
         WHERE
             goods_carts.user_id = ${userId}
-        AND goods_carts.product_id = product.product_id
+        AND goods_carts.product_id = products.product_id
         `;
         return new Promise(function (resolve, reject) {
             db.query(cartSQL, (err, data) => {
@@ -964,14 +963,14 @@ module.exports = () => {
         SELECT
             flows.user_id,
             flows.product_id,
-            product.product_name,
-            product.product_img_url
+            products.product_name,
+            products.product_img_url
         FROM
             flows,
-            product
+            products
         WHERE
             flows.user_id = ${userId}
-        AND flows.product_id = product.product_id
+        AND flows.product_id = products.product_id
         `;
         return new Promise(function (resolve, reject) {
             db.query(flowSQL, (err, data) => {
@@ -990,14 +989,14 @@ module.exports = () => {
             histories.user_id,
             histories.product_id,
             histories.time,
-            product.product_name,
-            product.product_img_url
+            products.product_name,
+            products.product_img_url
         FROM
             histories,
-            product
+            products
         WHERE
             histories.user_id = ${userId}
-        AND histories.product_id = product.product_id
+        AND histories.product_id = products.product_id
         ORDER BY updatedAt DESC
         limit 0,6
         `;
@@ -1023,23 +1022,22 @@ module.exports = () => {
             orders.total_price,
             orders.orderno,
             orders.address_id,
-            product.product_name,
-            product.product_img_url,
+            products.product_name,
+            products.product_img_url,
             addresses.addressinfo,
             addresses.addressarea
         FROM
             orders,
-            product,
+            products,
             addresses
         WHERE
             orders.user_id = ${userId}
-        AND orders.product_id = product.product_id
+        AND orders.product_id = products.product_id
         AND addresses.address_id = orders.address_id
         ORDER BY orders.updatedAt DESC
         `;
         return new Promise(function (resolve, reject) {
             db.query(orderSQL, (err, data) => {
-                console.log("bbb:",err,data)
                 if (err) {
                     reject([])
                 } else {
@@ -1134,11 +1132,81 @@ module.exports = () => {
             res.status(200).send({ 'msg': '地址修改成功！', 'code': 200}).end();
          })
     });
+    var Storage = multer.diskStorage({
+        destination: function (req, file, callback) {
+            callback(null, "./Images");
+        },
+        filename: function (req, file, callback) {
+            console.log("文件名：",file.fieldname + "_" + Date.now() + "_" + file.originalname)
+            callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+        }
+    });
+    var upload = multer({ storage: Storage }).array("imgUploader", 3); //Field name and max count
     /* 上传 */
     route.post('/file/uploading',(req, res, next)=>{
-        console.log("req:",req,res,next)
-
+        upload(req, res, (err)=> {
+            if (err) {
+                return res.end("Something went wrong!");
+            }
+            return res.end("File uploaded sucessfully!.");
+        });
     })
+    //产品编辑
+    route.post('/editPro', (req, res) => {
+        let productObj = {}
+        for (let obj in req.body) {
+            productObj = JSON.parse(obj)
+        }
+        Product.update({
+            category_id:productObj.category_id,
+            shop_id:productObj.shop_id,
+            product_name:productObj.product_name,
+            product_price:productObj.product_price,
+            product_uprice:productObj.product_uprice,
+            product_detail:productObj.product_detail
+        }, {
+            where: {
+                product_id: productObj.product_id
+            }
+          }).then(function (product) {
+            res.status(200).send({ 'msg': '产品修改成功！', 'code': 200}).end();
+         })
+    });
+    //产品新建
+    route.post('/addPro', (req, res) => {
+        let productObj = {}
+        for (let obj in req.body) {
+            productObj = JSON.parse(obj)
+        }
+        console.log("productObj",productObj)
+        //无关注，添加flow关注表记录
+        Product.create({
+            category_id:productObj.category_id,
+            addressinfo:productObj.addressinfo,
+            shop_id:productObj.shop_id,
+            product_name:productObj.product_name,
+            product_price:productObj.product_price,
+            product_uprice:productObj.product_uprice,
+            product_detail:productObj.product_detail
+        }).then((product)=> {
+            res.status(200).send({code:200,msg:'产品添加成功！'}).end();
+        })
+    });
+    //产品编辑
+    route.post('/delPro', (req, res) => {
+        let productObj = {}
+        for (let obj in req.body) {
+            productObj = JSON.parse(obj)
+        }
+                Product.destroy({
+                    where:{
+                        product_id:productObj.product_id
+                    }
+                }).then(product=>{
+                    res.status(200).send({code:200,msg:'删除产品成功'}).end();
+                })
+
+    });
 
     return route;
 }
