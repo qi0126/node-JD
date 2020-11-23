@@ -408,8 +408,10 @@ module.exports = () => {
         for (let obj in req.body) {
             userInfoObj = Object.assign(userInfoObj,JSON.parse(obj))
         }
+        
         let editPassword = common.md5(userInfoObj.password + common.MD5_SUFFXIE);
         let editObj = { user_name: userInfoObj.user_name,user_namesub:userInfoObj.user_namesub}
+        console.log("用户信息和密码：",userInfoObj,editPassword)
         if(userInfoObj.password != ""){
             editObj.login_password = editPassword
         }
@@ -885,10 +887,13 @@ module.exports = () => {
                     res.status(200).send({code:200,msg:'查询失改！'}).end();
                 } else {
                     //用户订单查询
+                    
                     orderSQL(userId).then(orderList=>{
                         //浏览过产品与次数
+                        console.log("aaa")
                         historySQL(userId).then(historylist=>{
                             //用户关注产品
+                            console.log("bbb")
                             flowSQL(userId).then(flowlist=>{
                                 //购物车
                                 cartSQL(userId).then(cartlist=>{
@@ -997,7 +1002,7 @@ module.exports = () => {
         WHERE
             histories.user_id = ${userId}
         AND histories.product_id = products.product_id
-        ORDER BY updatedAt DESC
+        ORDER BY histories.updatedAt DESC
         limit 0,6
         `;
         return new Promise(function (resolve, reject) {
@@ -1178,7 +1183,6 @@ module.exports = () => {
         for (let obj in req.body) {
             productObj = JSON.parse(obj)
         }
-        console.log("productObj",productObj)
         //无关注，添加flow关注表记录
         Product.create({
             category_id:productObj.category_id,
@@ -1198,13 +1202,44 @@ module.exports = () => {
         for (let obj in req.body) {
             productObj = JSON.parse(obj)
         }
-                Product.destroy({
-                    where:{
-                        product_id:productObj.product_id
-                    }
-                }).then(product=>{
-                    res.status(200).send({code:200,msg:'删除产品成功'}).end();
-                })
+        Product.destroy({
+            where:{
+                product_id:productObj.product_id
+            }
+        }).then(product=>{
+            res.status(200).send({code:200,msg:'删除产品成功'}).end();
+        })
+    });
+
+    //用户新建
+    route.post('/addUser', (req, res) => {
+        let userObj = {}
+        for (let obj in req.body) {
+            userObj = JSON.parse(obj)
+        }
+        let editPassword = common.md5(userObj.password + common.MD5_SUFFXIE);
+        let editObj = { user_name: userObj.user_name,user_namesub:userObj.user_namesub}
+        console.log("用户信息和密码：",userObj,editPassword)
+        if(userObj.password != ""){
+            editObj.login_password = editPassword
+        }
+        User.create(editObj).then((user)=> {
+            res.status(200).send({code:200,msg:'用户添加成功！'}).end();
+        })
+    });
+    //用户编辑
+    route.post('/delUser', (req, res) => {
+        let userObj = {}
+        for (let obj in req.body) {
+            userObj = JSON.parse(obj)
+        }
+        User.destroy({
+            where:{
+                user_id:userObj.user_id
+            }
+        }).then(user=>{
+            res.status(200).send({code:200,msg:'删除用户成功'}).end();
+        })
 
     });
 
