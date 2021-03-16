@@ -35,7 +35,6 @@ module.exports = () => {
                 if (err) {   //如果tokenid过期则会执行err的代码块
                     reject(err) 
                 } else {
-                    
                     resolve(decoded)
                 }
             })
@@ -326,8 +325,9 @@ module.exports = () => {
         for (let obj in req.body) {
             mObj = JSON.parse(obj);
         }
+        console.log("mObj:",mObj)
         let username = mObj.loginName;
-        let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE);;
+        let password = common.md5(mObj.loginPwd + common.MD5_SUFFXIE);;
         const selectUser = `SELECT * FROM users where user_name='${username}'`;
         db.query(selectUser, (err, data) => {
             if (err) {

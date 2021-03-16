@@ -47,20 +47,21 @@ import { Dialog,Toast } from 'vant';
 				}else{
 					self.$http.post('/login',{
 						loginName:self.username,
-						loginPawd:self.password,
+						loginPwd:self.password,
 					}).then((res)=>{
 						if(res.data.code == 200){
 							self.userInfo = res.data.data;
 							localStorage.userInfo = JSON.stringify(self.userInfo);
 							localStorage.accesstoken = self.userInfo.accesstoken
-							setTimeout(_=>{
-								self.$router.push({
-									path: "Mine"
-								});
-							},100)
-							setTimeout(_=>{
-								self.$router.go(0);
-							},200)
+							console.log("res:",res.data)
+							// setTimeout(_=>{
+							// 	self.$router.push({
+							// 		path: "Mine"
+							// 	});
+							// },100)
+							// setTimeout(_=>{
+							// 	self.$router.go(0);
+							// },200)
 						}else{
 							Toast(res.data.msg)
 						}
