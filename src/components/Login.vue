@@ -65,7 +65,7 @@ import { Dialog,Toast } from 'vant';
 							Toast(res.data.msg)
 						}
 					},(err)=>{
-						console.log(err);
+						// console.log(err);
 					});
 				}
 				

@@ -9,7 +9,7 @@
 	            <div class="user_detal">
 	                <p class="user_name">{{uInfs.user_namesub}}</p>
 	                <div class="reg">
-	                    <a href="#" class="reg_link">注册会员</a>
+	                    <span  class="reg_link" @click="returnMain">返回首页</span>
 	                    <div class="vip">
 	                    <span class="vip_icon">
 	                        <img src="../assets/images/vip.png" alt="">
@@ -269,7 +269,7 @@ import { Dialog,Toast } from 'vant';
 				self.$http.get('/flowNum').then((res)=>{
 					self.flowNum = res.data.flowNum
                 },(err)=>{
-                    console.log(err);
+                    // console.log(err);
                 })
 			},
 			//去关注产品页面
@@ -282,12 +282,16 @@ import { Dialog,Toast } from 'vant';
 				self.$http.get('/historyNum').then((res)=>{
 					self.historyNum = res.data.historyNum
                 },(err)=>{
-                    console.log(err);
+                    // console.log(err);
                 })
 			},
 			//去浏览记录产品页面
 			toHistory(){
 				this.$router.push('/history')
+			},
+			//返回首页
+			returnMain(){
+				this.$router.push('/main')
 			}
 		}
 	}

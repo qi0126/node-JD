@@ -50,7 +50,7 @@
                 self.$http.get('/flow').then((res)=>{
                     if(res.data.code == 200){
                         self.mainDatas = res.data.data
-                        console.log(self.mainDatas)
+                        // console.log(self.mainDatas)
                     }else{
                         Toast(res.data.msg)
                     }

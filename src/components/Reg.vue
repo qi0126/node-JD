@@ -65,7 +65,7 @@
 								}).then(() => {
 									localStorage.userInfo = JSON.stringify(self.regInfo);
 									localStorage.accesstoken =res.data.accesstoken
-									console.log(self.regInfo.accesstoken)
+									// console.log(self.regInfo.accesstoken)
 									//reg success, go to this login page
 									setTimeout(_=>{
 										self.$router.push({path:'mine'})
@@ -82,7 +82,7 @@
 							Toast( res.data.msg );
 						}
 					},(err)=>{
-						console.log(err);
+						// console.log(err);
 					});
 				}
 				

@@ -134,7 +134,7 @@
                     self.goodsData = res.data.data;
 
                 },(err)=>{
-                    console.log(err);
+                    // console.log(err);
                 })
             },
             //跳到购物车
@@ -154,7 +154,7 @@
                         Toast( res.data.msg );
                     }
                 },(err)=>{
-                    console.log(err);
+                    // console.log(err);
                 });
             },
             //加入购物车
@@ -179,7 +179,7 @@
                     }
                     self.getCartNum()//购物车产品数量
                 },(err)=>{
-                    console.log(err);
+                    // console.log(err);
                 });
             }
 

@@ -411,7 +411,6 @@ module.exports = () => {
         
         let editPassword = common.md5(userInfoObj.password + common.MD5_SUFFXIE);
         let editObj = { user_name: userInfoObj.user_name,user_namesub:userInfoObj.user_namesub}
-        console.log("用户信息和密码：",userInfoObj,editPassword)
         if(userInfoObj.password != ""){
             editObj.login_password = editPassword
         }
@@ -890,10 +889,8 @@ module.exports = () => {
                     
                     orderSQL(userId).then(orderList=>{
                         //浏览过产品与次数
-                        console.log("aaa")
                         historySQL(userId).then(historylist=>{
                             //用户关注产品
-                            console.log("bbb")
                             flowSQL(userId).then(flowlist=>{
                                 //购物车
                                 cartSQL(userId).then(cartlist=>{
@@ -1142,7 +1139,6 @@ module.exports = () => {
             callback(null, "./Images");
         },
         filename: function (req, file, callback) {
-            console.log("文件名：",file.fieldname + "_" + Date.now() + "_" + file.originalname)
             callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
         }
     });
@@ -1219,7 +1215,6 @@ module.exports = () => {
         }
         let editPassword = common.md5(userObj.password + common.MD5_SUFFXIE);
         let editObj = { user_name: userObj.user_name,user_namesub:userObj.user_namesub}
-        console.log("用户信息和密码：",userObj,editPassword)
         if(userObj.password != ""){
             editObj.login_password = editPassword
         }

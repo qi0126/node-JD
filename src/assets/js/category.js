@@ -41,7 +41,6 @@ function myMoveScroll() {
     }, false);
 
     childbox.addEventListener("touchmove", function(e) {
-        console.log("move");
         var event = e || window.event;
         event.preventDefault();
         endY = event.touches[0].clientY;

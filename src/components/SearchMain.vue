@@ -82,9 +82,9 @@
 						}
 						}).then((res)=>{
 							self.mDatas = res.data;
-							console.log(self.mDatas);
+							// console.log(self.mDatas);
 						},(err)=>{
-							console.log(err);
+							// console.log(err);
 						});
 					}
 				
@@ -104,9 +104,9 @@
 						}
 						}).then((res)=>{
 							self.mDatas = res.data;
-							console.log(self.mDatas);
+							// console.log(self.mDatas);
 						},(err)=>{
-							console.log(err);
+							// console.log(err);
 						});
 					}
 			},
@@ -124,9 +124,9 @@
 						}
 						}).then((res)=>{
 							self.mDatas = res.data;
-							console.log(self.mDatas);
+							// console.log(self.mDatas);
 						},(err)=>{
-							console.log(err);
+							// console.log(err);
 						});
 					}
 			},
@@ -144,9 +144,9 @@
 						}
 						}).then((res)=>{
 							self.mDatas = res.data;
-							console.log(self.mDatas);
+							// console.log(self.mDatas);
 						},(err)=>{
-							console.log(err);
+							// console.log(err);
 						});
 					}
 			}

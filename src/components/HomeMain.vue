@@ -79,7 +79,7 @@
                     self.homeDatas.push(res.data[3]);
                     self.mainDatas = res.data;
                 },(err)=>{
-                    console.log(err);
+                    // console.log(err);
                 })
             }
         }

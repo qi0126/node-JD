@@ -31,7 +31,7 @@ export default{
 					self.$router.push(`/catgory/${self.leftDatas[0].category_id}`)//默认分类的第一个
 				}
 			},(err)=>{
-				console.log(err);
+				// console.log(err);
 			})
 		},
 	}

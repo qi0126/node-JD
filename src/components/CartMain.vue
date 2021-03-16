@@ -100,12 +100,12 @@
 					}
 
 				},(err)=>{
-					console.log(err);
+					// console.log(err);
 				})
 			},
 			//去计算事件
 			toConfirm(){
-				console.log("去计算已选数组",this.checkProList)
+				// console.log("去计算已选数组",this.checkProList)
 
 			},
 			//全选选择框选中状态
@@ -134,7 +134,7 @@
 						Toast( res.data.msg );
 					}
 				},(err)=>{
-					console.log(err);
+					// console.log(err);
 				});
 				
 			},
@@ -191,7 +191,7 @@
 							Toast( res.data.msg );
 						}
 					},(err)=>{
-						console.log(err);
+						// console.log(err);
 					});
 				})
 				.catch(() => {

@@ -56,7 +56,7 @@ export default{
 					self.cateName = res.data.cateName?res.data.cateName:'-'
 					self.cateGoodsData = res.data.list;
 				},(err)=>{
-					console.log(err);
+					// console.log(err);
 				})
 			}
 		}
