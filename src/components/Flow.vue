@@ -5,7 +5,8 @@
                     <div class="share_quality">
                         <div class="share_quality_top">
                             <div class="share_title">
-                                <p class="titTxt">你所关注</p>
+                                <span class="titTxt mr10" @click="returnFun">返回</span>
+                                <span class="titTxt">你所关注</span>
                             </div>
                         </div>
                         <div class="share_quality_left not_eng_box">
@@ -59,6 +60,10 @@
                     Toast(err)
                 })
             },
+            //返回首页
+            returnFun(){
+                this.$router.go(-1)
+            }
         }
     }
 </script>
