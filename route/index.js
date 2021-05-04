@@ -233,6 +233,7 @@ module.exports = () => {
                     products.product_id,
                     shops.shop_id,
                     product_name,
+                    product_detail,
                     product_price,
                     product_uprice,
                     product_img_url,
@@ -678,6 +679,59 @@ module.exports = () => {
     for (let obj in req.body) {
       flowProObj = JSON.parse(obj);
     }
+    // 查询所有关注有没有重复，没有就新建true，有就直接返回false
+    let flowTF = true;
+    // 获取前端请求头发送过来的accesstoken
+    getToken(req.headers.accesstoken)
+      .then((userInfo) => {
+        Flow.findAll().then((flows) => {
+          flows.forEach((ielem) => {
+            let flowObj = ielem.dataValues;
+            if (
+              flowObj.user_id == userInfo.user_id &&
+              flowObj.product_id == flowProObj.product_id
+            ) {
+              flowTF = false; //有关注，就取消关注，删除flow关注表记录
+            }
+          });
+          if (flowTF) {
+            //无关注，添加flow关注表记录
+            Flow.create({
+              user_id: userInfo.user_id,
+              product_id: flowProObj.product_id,
+            }).then((FlowsOne) => {
+              res.status(200).send({ code: 200, msg: "关注产品成功！" }).end();
+            });
+          } else {
+            //有关注，就取消关注，删除flow关注表记录
+            Flow.destroy({
+              where: {
+                user_id: userInfo.user_id,
+                product_id: flowProObj.product_id,
+              },
+            }).then((flow) => {
+              res
+                .status(200)
+                .send({ code: 200, msg: "取消关注产品成功" })
+                .end();
+            });
+          }
+        });
+      })
+      .catch((err) => {
+        res
+          .status(203)
+          .send({ code: 203, msg: "用户token信息失效，请重新登录！" })
+          .end();
+      });
+  });
+  //产品关注和取消关注
+  route.post("/flowProApp", (req, res) => {
+    let flowProObj = {};
+    // for (let obj in req.body) {
+    //   flowProObj = JSON.parse(obj);
+    // }
+    flowProObj = req.body;
     // 查询所有关注有没有重复，没有就新建true，有就直接返回false
     let flowTF = true;
     // 获取前端请求头发送过来的accesstoken
