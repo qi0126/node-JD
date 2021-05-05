@@ -615,6 +615,40 @@ module.exports = () => {
       }
     });
   });
+  //产品加入购物车app
+  route.post("/addCartApp", (req, res) => {
+    let cartObj = {};
+    // for (let obj in req.body) {
+    //   cartObj = JSON.parse(obj);
+    // }
+    cartObj = req.body;
+    let addTF = true; //购物车没有此产品为true,有此产品为false，有产品累加
+    // 查询所有用户
+    Cart.findAll().then((res1) => {
+      res1.forEach((ielem, indOne) => {
+        if (
+          ielem.dataValues.product_id == cartObj.product_id &&
+          cartObj.user_id == ielem.dataValues.user_id
+        ) {
+          addTF = false; //有此产品并且user_id相同为false，有产品累加
+          updateCartFun(ielem.dataValues, cartObj, res);
+        }
+      });
+      ////购物车没有此产品为true,新增产品
+      if (addTF) {
+        Cart.create({
+          user_id: cartObj.user_id,
+          product_id: cartObj.product_id,
+          goods_num: cartObj.goods_num,
+        }).then(function (cart) {
+          res
+            .status(200)
+            .send({ msg: "创建购物车成功！", data: cart, code: 200 })
+            .end();
+        });
+      }
+    });
+  });
   function updateCartFun(ielem, cartObj, res) {
     let goods_num = ielem.goods_num + cartObj.goods_num;
     Cart.update(
@@ -659,6 +693,27 @@ module.exports = () => {
     for (let obj in req.body) {
       cartObj = JSON.parse(obj);
     }
+    Cart.update(
+      { goods_num: cartObj.goods_num },
+      {
+        where: {
+          cart_id: cartObj.cart_id,
+        },
+      }
+    ).then(function (cart) {
+      res
+        .status(200)
+        .send({ msg: "修改数量成功！", data: cart, code: 200 })
+        .end();
+    });
+  });
+  //购物车修改产品数量APP
+  route.post("/changeCartNumApp", (req, res) => {
+    let cartObj = {};
+    // for (let obj in req.body) {
+    //   cartObj = JSON.parse(obj);
+    // }
+    cartObj = req.body;
     Cart.update(
       { goods_num: cartObj.goods_num },
       {
