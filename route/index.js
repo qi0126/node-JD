@@ -45,17 +45,38 @@ module.exports = () => {
   //get homePage datas
   route.get("/home", (req, res) => {
     // 查询所有用户
-    getHomeDatas(getHomeStr, res);
+    getHomeDatas(getHomeStr, res, req);
   });
-  function getHomeDatas(getHomeStr, res) {
+  function getHomeDatas(getHomeStr, res, req) {
     db.query(getHomeStr, (err, data) => {
       if (err) {
         res.status(500).send("database err").end();
       } else {
         if (data.length == 0) {
-          res.status(500).send("no datas").end();
+          res.status(200).send({ data: [] }).end();
         } else {
-          res.send(data);
+          let proData = data;
+          getToken(req.headers.accesstoken).then((userInfo) => {
+            // console.log("userInfo", userInfo);
+            proData.forEach((jelem) => {
+              jelem.flowTF = false;
+              Flow.findAll().then((flows) => {
+                flows.forEach((ielem) => {
+                  let flowObj = ielem.dataValues;
+                  if (
+                    flowObj.user_id == userInfo.user_id &&
+                    flowObj.product_id == jelem.product_id
+                  ) {
+                    // console.log("aaa:", jelem);
+                    jelem.flowTF = true; //有关注
+                  }
+                });
+              });
+            });
+            setTimeout(() => {
+              res.status(200).send({ data: proData }).end();
+            }, 100);
+          });
         }
       }
     });
